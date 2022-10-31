@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Persons\" />
+    <Folder Include="Food\" />
+    <Folder Include="View\" />
+    <Folder Include="Restaurant\" />
   </ItemGroup>
 
 </Project>
