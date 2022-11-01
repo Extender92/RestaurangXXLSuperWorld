@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace RestaurangXXLSuperWorld.Food
 {
-    internal class MeatDishes : FoodItem
+    internal class MeatDish : FoodItem
     {
-        internal MeatDishes (string Name) : base(Name) { }
+        internal MeatDish (string Name) : base(Name) { }
     }
 
-    internal class MeatOne : MeatDishes
+    internal class MeatOne : MeatDish
     {
         public MeatOne () : base("Crackling pork roast with pickled onions") { }
     }
-    internal class MeatTwo : MeatDishes
+    internal class MeatTwo : MeatDish
     {
         public MeatTwo() : base("Roast beef with red wine & banana shallots") { }
     }
-    internal class MeatThree : MeatDishes
+    internal class MeatThree : MeatDish
     {
         public MeatThree() : base("T-bone steak with fries and béarnaise sauce") { }
     }

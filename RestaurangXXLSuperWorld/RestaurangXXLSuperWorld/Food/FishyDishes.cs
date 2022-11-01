@@ -6,19 +6,34 @@ using System.Threading.Tasks;
 
 namespace RestaurangXXLSuperWorld.Food
 {
-    internal class FishyDishes : FoodItem
+    internal class FishyDish : FoodItem
     {
-        internal FishyDishes (string Name) : base (Name) { }
+        internal FishyDish (string Name) : base (Name) { }
     }
-    internal class FishOne : FishyDishes
+    internal class FishOne : FishyDish
     {
-        public FishOne() : base("Spaghetti with pesto, crushed potato and salmon") { }
+        private readonly string[] _cookingSteps = {
+            "Förbereder Köksredskapen",
+            "HACKA LÖKEN!!!!!!",
+            "Hackar Pinjenötter",
+            "Hackar Basilika",
+            "Kokar Pastan",
+            "Tillreder laxen",
+            "Kokar Potatis",
+            "MOSAR POTATIS!!!!!",
+            "Lägger upp maten på tallrik",
+            "Lägger på en kvist Persilja"
+        };
+        public FishOne() : base("Spaghetti with pesto, crushed potato and salmon") {
+            Prize = 250;
+        }
+        internal override string GetCurrentStep() { return _cookingSteps[_currentStep]; }
     }
-    internal class FishTwo : FishyDishes
+    internal class FishTwo : FishyDish
     {
         public FishTwo() : base("Crispy Homemade Fish Dicks with white sauce") { }
     }
-    internal class FishThree : FishyDishes
+    internal class FishThree : FishyDish
     {
         public FishThree() : base("California Sushi Rolls") { }
     }

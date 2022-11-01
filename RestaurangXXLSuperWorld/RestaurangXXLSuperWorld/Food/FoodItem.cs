@@ -18,7 +18,7 @@ namespace RestaurangXXLSuperWorld.Food
             get { if (IsDone && _timeDone != null) { return _timeDone; } return null;} 
             set { _timeDone = value; } 
         }
-        public int Cost { get; init; }
+        public int Prize { get; init; }
         public int TimeToCook { get; init; }
 
         internal FoodItem(string name) 

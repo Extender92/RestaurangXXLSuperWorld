@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace RestaurangXXLSuperWorld.Food
 {
-    internal class VegetarianDishes : FoodItem
+    internal class VegetarianDish : FoodItem
     {
-        internal VegetarianDishes (string Name) : base(Name) { }
+        internal VegetarianDish (string Name) : base(Name) { }
     }
-    internal class VegOne : VegetarianDishes
+    internal class VegOne : VegetarianDish
     {
         public VegOne() : base("Sweet & sour lentil dhal with grilled aubergine") { }
     }
-    internal class VegTwo : VegetarianDishes
+    internal class VegTwo : VegetarianDish
     {
         public VegTwo() : base("Caesar Salad with crisp homemade croutons and a light caesar dressing") { }
     }
-    internal class VegThree : VegetarianDishes
+    internal class VegThree : VegetarianDish
     {
         public VegThree() : base("Aloo Gobi with Potatoes & Cauliflower") { }
     }
