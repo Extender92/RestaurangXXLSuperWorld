@@ -12,6 +12,7 @@ namespace RestaurangXXLSuperWorld.Persons {
      * A class representing the queue to a restaurant with the 
      * associated functionality
      */
+    // Constraint, whatever we want to place in the queue must have a "size"
     // Constraint, must be able to create new Ts with public parameterless xtor!
     internal class RestaurantQueue<T> where T : IMeasurable, new() {
         //A generic Collection of generic type :)
@@ -38,7 +39,7 @@ namespace RestaurangXXLSuperWorld.Persons {
             return new RestaurantQueue<T>(groups);
         }
         /**
-         * fill the queue with a suitable amount of elements
+         * Fill the queue with a suitable amount of elements
          */
         public void FillQueue(int numberOfParties) {
             for (int number = 0; number < numberOfParties; number++) {
@@ -50,12 +51,15 @@ namespace RestaurangXXLSuperWorld.Persons {
          * "We can solve any problem by introducing an extra level of indirection."
          */
         public T GetFirstInQueue() {
-            return _groups.First();
+            T firstParty = _groups.First();
+            _groups.Remove(firstParty);
+            return firstParty;
         }
         /**
-         * Gets a party os suitable Size in queue if there is one, else gets the first party in queue
+         * Gets a party of suitable Size in queue if there is one, else gets the first party in queue
          */
         public T GetSuitableParty(int maxSize) {
+            //Find the first entry matching size requirements
             foreach(T party in _groups) {
                 if(party.Size() <= maxSize) {
                     T suitableParty = party;
@@ -63,6 +67,7 @@ namespace RestaurangXXLSuperWorld.Persons {
                     return suitableParty;
                 }
             }
+            //if we cannot find one, return the first unfitting group
             return GetFirstInQueue();
         }
     }
