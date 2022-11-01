@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace RestaurangXXLSuperWorld.Persons {
-    internal class PartyGenerator {
+    internal interface IMeasurable {
+        /**
+         * Returns some integer representation of an objects "size"
+         */
+        public int Size();
     }
 }

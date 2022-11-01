@@ -55,8 +55,20 @@ namespace RestaurangXXLSuperWorld.Persons
          */
         internal static string GetName()
         {
-            return names1[random.Next(names1.Length)] +
-             " " + names2[random.Next(names2.Length)];
+            return GetFirstName() +
+             " " + GetLastName();
+        }
+        /**
+         * Returns a swedish first name
+         */
+        internal static string GetFirstName() {
+            return names1[random.Next(names1.Length)];
+        }
+        /**
+         * Returns a swedish surname
+         */
+        internal static string GetLastName() {
+            return names2[random.Next(names2.Length)];
         }
         //Good luck ever obtaining an instance of this class 
         private NameGenerator() {; }
