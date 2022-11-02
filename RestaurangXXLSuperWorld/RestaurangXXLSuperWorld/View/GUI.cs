@@ -23,10 +23,14 @@ namespace RestaurangXXLSuperWorld.View
             char[] kitchenChar = { '╦', '═', '╦', '║', '╚', '╝' };
             char[] tableChar = { '┌', '─', '┐', '│', '└', '┘' };
 
-            RestaurantPrinter(110, 20, 1, 1, restaurangChar, ConsoleColor.Red);
-            RestaurantPrinter(10, 4, 50, 1, kitchenChar, ConsoleColor.Red);
+            RestaurantPrinter(51, 50, 1, 1, restaurangChar, ConsoleColor.Red);
+            //RestaurantPrinter(10, 4, 50, 1, kitchenChar, ConsoleColor.Red);
 
-            RestaurantPrinter(5, 2, 3, 2, tableChar, ConsoleColor.Blue);
+            for (int i = 0; i < 5; i++)
+            {
+                RestaurantPrinter(18, 5, 4, (3 + 10 * i), tableChar, ConsoleColor.Blue);
+                RestaurantPrinter(9, 5, 40, (3 + 10 * i), tableChar, ConsoleColor.Blue);
+            }
         }
 
         private static void RestaurantPrinter(int width, int height, int positionX, int positionY, char[] characters, ConsoleColor color)
