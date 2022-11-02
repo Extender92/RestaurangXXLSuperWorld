@@ -25,16 +25,44 @@ namespace RestaurangXXLSuperWorld.Food
             "Lägger på en kvist Persilja"
         };
         public FishOne() : base("Spaghetti with pesto, crushed potato and salmon") {
-            Prize = 250;
+            Price = 250;
         }
         internal override string GetCurrentStep() { return _cookingSteps[_currentStep]; }
     }
     internal class FishTwo : FishyDish
     {
-        public FishTwo() : base("Crispy Homemade Fish Dicks with white sauce") { }
+        private readonly string[] _cookingSteps = {
+            "Förbereder Köksredskapen",
+            "HACKA LÖKEN!!!!!!",
+            "Filear Fisken",
+            "Panerar Fisken",
+            "Tillreder sås",
+            "Smakar av såsen",
+            "Kokar Potatis",
+            "MOSAR POTATIS!!!!!",
+            "Lägger upp maten på tallrik",
+            "Lägger på en hög bostongurka"
+        };
+        public FishTwo() : base("Crispy Homemade Fish Dicks with white sauce") {
+            Price = 195;
+        }
     }
     internal class FishThree : FishyDish
     {
-        public FishThree() : base("California Sushi Rolls") { }
+        private readonly string[] _cookingSteps = {
+            "Förbereder Köksredskapen",
+            "HACKA LÖKEN!!!!!!",
+            "Kokar ris",
+            "Kokar ris",
+            "Kokar ris",
+            "Skivar tillbehör",
+            "Rullar riset",
+            "Rullar rullarna i sesamfrö",
+            "Lägger upp maten på ett fat",
+            "Lägger på en klick wasabi, majonnäs och avslutar med några drag med ketchupflaskan"
+        };
+        public FishThree() : base("California Sushi Rolls") {
+            Price = 300;
+        }
     }
 }
