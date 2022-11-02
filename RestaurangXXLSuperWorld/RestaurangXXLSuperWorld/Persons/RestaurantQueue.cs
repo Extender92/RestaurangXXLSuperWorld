@@ -13,7 +13,7 @@ namespace RestaurangXXLSuperWorld.Persons {
      * associated functionality
      */
     // Constraint, whatever we want to place in the queue must have a "size"
-    // Constraint, must be able to create new Ts with public parameterless xtor!
+    // Constraint, must be able to create new Ts with public parameterless ctor!
     internal class RestaurantQueue<T> where T : IMeasurable, new() {
         //A generic Collection of generic type :)
         private readonly Collection<T> _groups;

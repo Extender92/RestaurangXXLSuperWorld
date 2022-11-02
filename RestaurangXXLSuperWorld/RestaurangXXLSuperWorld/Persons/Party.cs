@@ -27,9 +27,9 @@ namespace RestaurangXXLSuperWorld.Persons {
             _minPartySize = min;
         }
         /**
-         * Xtor for party, creates a party of size within bounds
+         * Ctor for party, creates a party of size within bounds
          */
-        internal Party() {
+        public Party() {
             _partySize = _random.Next(_minPartySize, _maxPartySize+1);
             _members = new T[_partySize];
             for(int i = 0; i < _partySize; i++) {
@@ -37,7 +37,8 @@ namespace RestaurangXXLSuperWorld.Persons {
             }
         }
         /**
-         * Returns the party as a suitable IEnumerable
+         * Returns the party as a suitable type
+         * Yet to be decided
          */
         internal IEnumerable<T> getParty() {
             return _members.ToList();
