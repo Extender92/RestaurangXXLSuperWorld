@@ -1,4 +1,5 @@
 ﻿using RestaurangXXLSuperWorld.Persons;
+using RestaurangXXLSuperWorld.RestaurantLogic;
 using RestaurangXXLSuperWorld.View;
 using System.Diagnostics;
 
@@ -41,21 +42,23 @@ namespace RestaurangXXLSuperWorld
 
             //Main Loop Skeleton
 
-            Stopwatch timer = new Stopwatch();
-            timer.Start();
-            for (int frame = 0; true ; frame++) {
-                //Program Loop Here
+            //Stopwatch timer = new Stopwatch();
+            //timer.Start();
+            //for (int frame = 0; true ; frame++) {
+            //    //Program Loop Here
                 
-                //Timer Debug
-                Console.SetCursorPosition(0, 0);
-                Console.WriteLine($"Elapsed in program: {timer.Elapsed.TotalMilliseconds}");
-                //Wait without accumulating errors
-                Thread.Sleep(FrameTime - (((int)timer.Elapsed.TotalMilliseconds) % 1000));
-            }
+            //    //Timer Debug
+            //    Console.SetCursorPosition(0, 0);
+            //    Console.WriteLine($"Elapsed in program: {timer.Elapsed.TotalMilliseconds}");
+            //    //Wait without accumulating errors
+            //    Thread.Sleep(FrameTime - (((int)timer.Elapsed.TotalMilliseconds) % 1000));
 
-        }
+            Restaurant restaurant = new Restaurant();
+            restaurant.Draw();
+            restaurant.PopulateTables();
 
+            
 
-     
+        }    
     }
 }
