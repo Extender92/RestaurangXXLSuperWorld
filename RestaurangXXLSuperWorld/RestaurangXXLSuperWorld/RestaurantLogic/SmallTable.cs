@@ -5,6 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace RestaurangXXLSuperWorld.RestaurantLogic {
-    internal abstract class Table {
+    internal class SmallTable : Table {
     }
 }
