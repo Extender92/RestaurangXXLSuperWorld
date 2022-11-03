@@ -18,11 +18,13 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private int sizeX = 51;
         private int sizeY = 50;
 
-        private List<Person> waiters;
-        private List<Table> tables;
-        private RestaurantQueue<Party<Customer>> restaurantQueue;
-        private List<Order> completedOrders;
-        private Kitchen kitchen;
+        private static int dailyCustomers = 80;
+
+        private List<Person> waiters = new();
+        private List<Table> tables = new();
+        private RestaurantQueue<Party<Customer>> restaurantQueue = RestaurantQueue<Party<Customer>>.InitializeQueue(dailyCustomers);
+        private List<Order> completedOrders = new();
+        private Kitchen kitchen = new();
 
         private void PopulateWaiters()
         {
@@ -32,27 +34,30 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
             }
         }
   
-        private void PopulateTables()
+        internal void PopulateTables()
         {
             for (int i = 0; i < 5; i++)
             {
-                tables.Add(new LargeTable());
-                tables.Add(new SmallTable());
+                tables.Add(new LargeTable(4, (3 + 10 * i)));
+                tables.Add(new SmallTable(40, (3 + 10 * i)));
+
+                
+
+                //GUI.RestaurantPrinter(LargeTable, 5, 4, (3 + 10 * i), Table.charSet, ConsoleColor.Blue);
+                //GUI.RestaurantPrinter(9, 5, 40, (3 + 10 * i), Table.charSet, ConsoleColor.Blue);
+
+            }
+            foreach (Table table in tables)
+            {
+                table.Draw();
             }
         }
 
 
-
-
-
-
-
-
-        private void draw()
+        internal void Draw()
         {
+            
             GUI.RestaurantPrinter(sizeX, sizeY, positionX, positionY, charSet, Color);
         }
-
-
     }
 }
