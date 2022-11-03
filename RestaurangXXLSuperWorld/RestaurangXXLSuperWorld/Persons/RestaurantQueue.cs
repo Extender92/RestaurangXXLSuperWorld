@@ -23,20 +23,20 @@ namespace RestaurangXXLSuperWorld.Persons {
         /**
          * Gets an instance of a queue with a default number of parties
          */
-        public static RestaurantQueue<T> InitializeQueue(int numberOfVisitors) {
+        public static RestaurantQueue<T> InitializeQueue(int numberToQueue) {
             //Initialize the collection of Ts
-            Collection<T> groups = new ();
+            Collection<T> groupsInQueue = new ();
             //Create new Ts and add to collection as long as there is space for more
-            while (numberOfVisitors > 0) {
+            while (numberToQueue > 0) {
                 T newGroup = new();
                 //Can the new group fit?
-                if(newGroup.Size() <= numberOfVisitors) {
+                if(newGroup.Size() <= numberToQueue) {
                     // Then add it and decrease the number of visitors needed to fill the queue
-                    groups.Add(newGroup);
-                    numberOfVisitors -= newGroup.Size();
+                    groupsInQueue.Add(newGroup);
+                    numberToQueue -= newGroup.Size();
                 }
             }
-            return new RestaurantQueue<T>(groups);
+            return new RestaurantQueue<T>(groupsInQueue);
         }
         /**
          * Fill the queue with a suitable amount of elements

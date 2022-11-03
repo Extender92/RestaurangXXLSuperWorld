@@ -12,32 +12,33 @@ namespace RestaurangXXLSuperWorld.Food {
         public FishOne() : base("Spaghetti with pesto, crushed potato and salmon") {
             Price = 250;
             _cookingSteps = new string[] {
-            "Förbereder Köksredskapen",
-            "HACKA LÖKEN!!!!!!",
-            "Hackar Pinjenötter",
-            "Hackar Basilika",
-            "Kokar Pastan",
-            "Tillreder laxen",
-            "Kokar Potatis",
-            "MOSAR POTATIS!!!!!",
-            "Lägger upp maten på tallrik",
-            "Lägger på en kvist Persilja" 
+                "Förbereder Köksredskapen",
+                "HACKA LÖKEN!!!!!!",
+                "Hackar Pinjenötter",
+                "Hackar Basilika",
+                "Kokar Pastan",
+                "Tillreder laxen",
+                "Kokar Potatis",
+                "MOSAR POTATIS!!!!!",
+                "Lägger upp maten på tallrik",
+                "Lägger på en kvist Persilja"
             };
         }
     }
     internal class FishTwo : FishyDish {
         public FishTwo() : base("Crispy Homemade Fish Dicks with white sauce") {
             Price = 195;
-            _cookingSteps = new string[] {"Förbereder Köksredskapen",
-            "HACKA LÖKEN!!!!!!",
-            "Filear Fisken",
-            "Panerar Fisken",
-            "Tillreder sås",
-            "Smakar av såsen",
-            "Kokar Potatis",
-            "MOSAR POTATIS!!!!!",
-            "Lägger upp maten på tallrik",
-            "Lägger på en hög bostongurka"
+            _cookingSteps = new string[] {
+                "Förbereder Köksredskapen",
+                "HACKA LÖKEN!!!!!!",
+                "Filear Fisken",
+                "Panerar Fisken",
+                "Tillreder sås",
+                "Smakar av såsen",
+                "Kokar Potatis",
+                "MOSAR POTATIS!!!!!",
+                "Lägger upp maten på tallrik",
+                "Lägger på en hög bostongurka"
             };
         }
     }
@@ -45,16 +46,16 @@ namespace RestaurangXXLSuperWorld.Food {
         public FishThree() : base("California Sushi Rolls") {
             Price = 300;
             _cookingSteps = new string[] {
-            "Förbereder Köksredskapen",
-            "HACKA LÖKEN!!!!!!",
-            "Kokar ris",
-            "Kokar ris",
-            "Kokar ris",
-            "Skivar tillbehör",
-            "Rullar riset",
-            "Rullar rullarna i sesamfrö",
-            "Lägger upp maten på ett fat",
-            "Lägger på en klick wasabi, majonnäs och avslutar med några drag med ketchupflaskan"
+                "Förbereder Köksredskapen",
+                "HACKA LÖKEN!!!!!!",
+                "Kokar ris",
+                "Kokar ris",
+                "Kokar ris",
+                "Skivar tillbehör",
+                "Rullar riset",
+                "Rullar rullarna i sesamfrö",
+                "Lägger upp maten på ett fat",
+                "Lägger på en klick wasabi, majonnäs och avslutar med några drag med ketchupflaskan"
             };
         }
     }
