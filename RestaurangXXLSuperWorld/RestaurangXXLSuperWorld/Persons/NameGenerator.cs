@@ -37,7 +37,7 @@ namespace RestaurangXXLSuperWorld.Persons
                 "Jan",
                 "Maria",
                 "Karin",
-                "Lena" };
+                "Lena"};
         private static readonly string[] names2 = {
                 "Andersson",
                 "Johansson",

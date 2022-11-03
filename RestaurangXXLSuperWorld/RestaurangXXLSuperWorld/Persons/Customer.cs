@@ -16,7 +16,7 @@ namespace RestaurangXXLSuperWorld.Persons {
             Money = random.Next(250, 501);
         }
         private void FillWallet(int amount = 250) {
-            Money = amount;
+            Money += amount;
         }
         internal void ModifySatisfaction(double foodQuality, double tableQuality, double serviceQuality) {
             Satisfaction -= 1;
