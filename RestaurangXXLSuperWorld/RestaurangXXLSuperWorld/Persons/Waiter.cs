@@ -37,6 +37,9 @@ namespace RestaurangXXLSuperWorld.Persons {
         internal void DeliverOrderToKitchen() {
 
         }
+        internal void CleanTable() {
+
+        }
 
     }
 }
