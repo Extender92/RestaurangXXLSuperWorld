@@ -19,7 +19,7 @@ namespace RestaurangXXLSuperWorld.View
             //int[] intsTwo = { 7, 3, 7, 10, 0, 1 };
             //int[][] charSet = { intsOne, intsTwo };
 
-            char[] restaurangChar = { '╔', '═', '╗', '║', '╚', '╝' };
+            //char[] restaurangChar = { '╔', '═', '╗', '║', '╚', '╝' };
             char[] kitchenChar = { '╦', '═', '╦', '║', '╚', '╝' };
             char[] tableChar = { '┌', '─', '┐', '│', '└', '┘' };
 
@@ -49,7 +49,7 @@ namespace RestaurangXXLSuperWorld.View
          * </example>
          * </summary>
         */
-        private static void RestaurantPrinter(int width, int height, int positionX, int positionY, char[] characters, ConsoleColor color)
+        internal static void RestaurantPrinter(int width, int height, int positionX, int positionY, char[] characters, ConsoleColor color)
         {
             int[] cursorPosition = { positionX, positionY };
             Console.ForegroundColor = color;
