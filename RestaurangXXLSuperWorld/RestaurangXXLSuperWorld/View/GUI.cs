@@ -8,30 +8,30 @@ namespace RestaurangXXLSuperWorld.View
 {
     internal class GUI
     {
-        internal static void DrawRestaurant()
-        {
-            //char[,] characters = { { '╚', '╝', '╬', '═', '╩', '╠', '╣', '╦', '╔', '╗', '║' }, { '└', '┘', '┼', '─', '┴', '├', '┤', '┬', '┌', '┐', '│' } };
-            //                          0    1    2    3    4    5    6    7    8    9    10       0    1    2    3    4    5    6    7    8    9    10
+        //internal static void DrawRestaurant()
+        //{
+        //    //char[,] characters = { { '╚', '╝', '╬', '═', '╩', '╠', '╣', '╦', '╔', '╗', '║' }, { '└', '┘', '┼', '─', '┴', '├', '┤', '┬', '┌', '┐', '│' } };
+        //    //                          0    1    2    3    4    5    6    7    8    9    10       0    1    2    3    4    5    6    7    8    9    10
 
-            //char[][] characters = { "╚╝╬═╩╠╣╦╔╗║".ToCharArray(), "└┘┼─┴├┤┬┌┐│".ToCharArray() };
+        //    //char[][] characters = { "╚╝╬═╩╠╣╦╔╗║".ToCharArray(), "└┘┼─┴├┤┬┌┐│".ToCharArray() };
 
-            //int[] intsOne = { 8, 3, 9, 10, 0, 1 };
-            //int[] intsTwo = { 7, 3, 7, 10, 0, 1 };
-            //int[][] charSet = { intsOne, intsTwo };
+        //    //int[] intsOne = { 8, 3, 9, 10, 0, 1 };
+        //    //int[] intsTwo = { 7, 3, 7, 10, 0, 1 };
+        //    //int[][] charSet = { intsOne, intsTwo };
 
-            //char[] restaurangChar = { '╔', '═', '╗', '║', '╚', '╝' };
-            char[] kitchenChar = { '╦', '═', '╦', '║', '╚', '╝' };
-            char[] tableChar = { '┌', '─', '┐', '│', '└', '┘' };
+        //    //char[] restaurangChar = { '╔', '═', '╗', '║', '╚', '╝' };
+        //    char[] kitchenChar = { '╦', '═', '╦', '║', '╚', '╝' };
+        //    char[] tableChar = { '┌', '─', '┐', '│', '└', '┘' };
 
-            RestaurantPrinter(51, 50, 1, 1, restaurangChar, ConsoleColor.Red);
-            //RestaurantPrinter(10, 4, 50, 1, kitchenChar, ConsoleColor.Red);
+        //    RestaurantPrinter(51, 50, 1, 1, restaurangChar, ConsoleColor.Red);
+        //    //RestaurantPrinter(10, 4, 50, 1, kitchenChar, ConsoleColor.Red);
 
-            for (int i = 0; i < 5; i++)
-            {
-                RestaurantPrinter(18, 5, 4, (3 + 10 * i), tableChar, ConsoleColor.Blue);
-                RestaurantPrinter(9, 5, 40, (3 + 10 * i), tableChar, ConsoleColor.Blue);
-            }
-        }
+        //    for (int i = 0; i < 5; i++)
+        //    {
+        //        RestaurantPrinter(18, 5, 4, (3 + 10 * i), tableChar, ConsoleColor.Blue);
+        //        RestaurantPrinter(9, 5, 40, (3 + 10 * i), tableChar, ConsoleColor.Blue);
+        //    }
+        //}
         /** <summary>
          * This method Prints rectangles with colored borders in the console
          * <param name="width">internal width of rectangle in cols</param>
