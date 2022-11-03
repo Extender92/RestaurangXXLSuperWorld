@@ -32,7 +32,23 @@ namespace RestaurangXXLSuperWorld.View
                 RestaurantPrinter(9, 5, 40, (3 + 10 * i), tableChar, ConsoleColor.Blue);
             }
         }
-
+        /** <summary>
+         * This method Prints rectangles with colored borders in the console
+         * <param name="width">internal width of rectangle in cols</param>
+         * <param name="height">internal height of rectangle in rows</param>
+         * <param name="positionX">Column-Offset</param>
+         * <param name="positionY">Row-offset</param>
+         * <param name="characters">The charset to use</param>
+         * <param name="color">The Color of the border</param>
+         * <example>
+         * For example:
+         * <code>
+         * RestaurantPrinter(18, 5, 4, 3, tableChar, ConsoleColor.Blue);
+         * </code>
+         * results in a blue rectangle of size 18*5, border exclusive, starting at position (4,3)
+         * </example>
+         * </summary>
+        */
         private static void RestaurantPrinter(int width, int height, int positionX, int positionY, char[] characters, ConsoleColor color)
         {
             int[] cursorPosition = { positionX, positionY };
