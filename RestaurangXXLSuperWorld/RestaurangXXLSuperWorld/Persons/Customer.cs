@@ -1,4 +1,5 @@
 ﻿using RestaurangXXLSuperWorld.Food;
+using RestaurangXXLSuperWorld.RestaurantLogic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -11,7 +12,8 @@ namespace RestaurangXXLSuperWorld.Persons {
         public int Money { get; set; }
         public double Satisfaction { get; private set; }
         public Customer() {
-
+            Random random = new Random();
+            Money = random.Next(250, 501);
         }
         private void FillWallet(int amount = 250) {
             Money = amount;
@@ -24,7 +26,7 @@ namespace RestaurangXXLSuperWorld.Persons {
 
             return 0;
         }
-        internal FoodItem GetDishToOrder(/*Menu menu*/) {
+        internal FoodItem GetDishToOrder(Menu menu) {
 
 
             //Default Order

@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace RestaurangXXLSuperWorld.Food
 {
-    internal class FoodItem
+    internal abstract class FoodItem
     {
         protected int _currentStep;
+        protected string[] _cookingSteps;
         protected DateTime? _timeDone = null;
         public double QualityLevel { get; set; }
         public string Name { get; init; }
@@ -34,6 +35,6 @@ namespace RestaurangXXLSuperWorld.Food
                 TimeDone = DateTime.Now;
             }
         }
-        internal virtual string GetCurrentStep() { return "Cooking the idea of Food"; }
+        internal virtual string GetCurrentStep() { return _cookingSteps[_currentStep]; }
     }
 }

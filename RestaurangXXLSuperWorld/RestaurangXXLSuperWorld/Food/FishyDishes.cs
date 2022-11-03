@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RestaurangXXLSuperWorld.Food
-{
-    internal class FishyDish : FoodItem
-    {
-        internal FishyDish (string Name) : base (Name) { }
+namespace RestaurangXXLSuperWorld.Food {
+    internal abstract class FishyDish : FoodItem {
+        internal FishyDish(string Name) : base(Name) { }
     }
-    internal class FishOne : FishyDish
-    {
-        private readonly string[] _cookingSteps = {
+    internal class FishOne : FishyDish {
+        public FishOne() : base("Spaghetti with pesto, crushed potato and salmon") {
+            Price = 250;
+            _cookingSteps = new string[] {
             "Förbereder Köksredskapen",
             "HACKA LÖKEN!!!!!!",
             "Hackar Pinjenötter",
@@ -22,17 +21,14 @@ namespace RestaurangXXLSuperWorld.Food
             "Kokar Potatis",
             "MOSAR POTATIS!!!!!",
             "Lägger upp maten på tallrik",
-            "Lägger på en kvist Persilja"
-        };
-        public FishOne() : base("Spaghetti with pesto, crushed potato and salmon") {
-            Price = 250;
+            "Lägger på en kvist Persilja" 
+            };
         }
-        internal override string GetCurrentStep() { return _cookingSteps[_currentStep]; }
     }
-    internal class FishTwo : FishyDish
-    {
-        private readonly string[] _cookingSteps = {
-            "Förbereder Köksredskapen",
+    internal class FishTwo : FishyDish {
+        public FishTwo() : base("Crispy Homemade Fish Dicks with white sauce") {
+            Price = 195;
+            _cookingSteps = new string[] {"Förbereder Köksredskapen",
             "HACKA LÖKEN!!!!!!",
             "Filear Fisken",
             "Panerar Fisken",
@@ -42,14 +38,13 @@ namespace RestaurangXXLSuperWorld.Food
             "MOSAR POTATIS!!!!!",
             "Lägger upp maten på tallrik",
             "Lägger på en hög bostongurka"
-        };
-        public FishTwo() : base("Crispy Homemade Fish Dicks with white sauce") {
-            Price = 195;
+            };
         }
     }
-    internal class FishThree : FishyDish
-    {
-        private readonly string[] _cookingSteps = {
+    internal class FishThree : FishyDish {
+        public FishThree() : base("California Sushi Rolls") {
+            Price = 300;
+            _cookingSteps = new string[] {
             "Förbereder Köksredskapen",
             "HACKA LÖKEN!!!!!!",
             "Kokar ris",
@@ -60,9 +55,7 @@ namespace RestaurangXXLSuperWorld.Food
             "Rullar rullarna i sesamfrö",
             "Lägger upp maten på ett fat",
             "Lägger på en klick wasabi, majonnäs och avslutar med några drag med ketchupflaskan"
-        };
-        public FishThree() : base("California Sushi Rolls") {
-            Price = 300;
+            };
         }
     }
 }
