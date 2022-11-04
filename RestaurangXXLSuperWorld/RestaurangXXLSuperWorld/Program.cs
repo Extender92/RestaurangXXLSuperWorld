@@ -38,15 +38,15 @@ namespace RestaurangXXLSuperWorld
         //        Console.WriteLine(customer.Satisfaction);
         //    }
 
-            Menu menu = new Menu();
-            menu.DisplayMenu();
-            List<FoodItem> foods= menu.GetSuitableDishes();
-            int rand;
-            Random rand2 = new();
-            int index = rand2.Next(0, foods.Count);
-            FoodItem food = foods[index];
-            FoodItem food2 = menu.OrderOneOf<FoodItem>(food);
-            Console.WriteLine("Någon ville ha en " + food.Name + " till priset av " + food.Price);
+            //Menu menu = new Menu();
+            //menu.DisplayMenu();
+            //List<FoodItem> foods= menu.GetSuitableDishes();
+            //int rand;
+            //Random rand2 = new();
+            //int index = rand2.Next(0, foods.Count);
+            //FoodItem food = foods[index];
+            //FoodItem food2 = menu.OrderOneOf<FoodItem>(food);
+            //Console.WriteLine("Någon ville ha en " + food.Name + " till priset av " + food.Price);
 
 
             //GUI.DrawRestaurant();
@@ -66,9 +66,9 @@ namespace RestaurangXXLSuperWorld
             //    Thread.Sleep(FrameTime - (((int)timer.Elapsed.TotalMilliseconds) % 1000));
 
 
-            //Restaurant restaurant = new Restaurant();
-            //restaurant.Draw();
-            //restaurant.PopulateTables();
+            Restaurant restaurant = new Restaurant();
+            restaurant.Draw();
+            restaurant.PopulateTables();
 
             
 

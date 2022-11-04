@@ -33,6 +33,12 @@ namespace RestaurangXXLSuperWorld.Persons {
         {
             SetQuality();
         }
+        internal void SetKitchen(Kitchen kitchen) {
+            this.kitchen = kitchen;
+        }
+        internal void SetTables(List<Table> tables) {
+            this.tables = tables;
+        }
         internal void TakeOrderFromTable() {
 
         }
