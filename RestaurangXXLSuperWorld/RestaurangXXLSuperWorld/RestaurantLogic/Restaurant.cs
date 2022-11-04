@@ -15,7 +15,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private int positionX = 1;
         private int positionY = 1;
 
-        private int sizeX = 51;
+        private int sizeX = 80;
         private int sizeY = 50;
 
         private static int dailyCustomers = 80;
@@ -24,7 +24,15 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private List<Table> tables = new();
         private RestaurantQueue<Party<Customer>> restaurantQueue = RestaurantQueue<Party<Customer>>.InitializeQueue(dailyCustomers);
         private List<Order> completedOrders = new();
-        private Kitchen kitchen = new();
+        private Kitchen kitchen;
+        private RestaurantDoor door;
+
+        internal Restaurant(int numberOfTables)
+        {
+            kitchen = new(positionX, sizeX);
+            door = new(positionX, positionY, sizeX, sizeY);
+        }
+
 
         internal void PopulateWaiters()
         {
@@ -63,6 +71,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
          */
         internal void Update()
         {
+            GUI.ResetStatics();
             foreach (Waiter waiter in waiters)
             {
                 waiter.Update();
@@ -73,15 +82,20 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
                 table.Update();
             }
             kitchen.Update();
+            Thread.Sleep(1000);
+            foreach (Table table in tables)
+            {
+                GUI.DrawWaiterAtTable(table, null);             
+            }
+            GUI.DrawWaiterAtKitchen(kitchen, null);
         }
 
-   
-
-
         internal void Draw()
-        {
-            
+        {            
             GUI.RestaurantPrinter(sizeX, sizeY, positionX, positionY, charSet, Color);
+            kitchen.Draw();
+            door.Draw();
+
         }
     }
 }

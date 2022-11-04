@@ -66,16 +66,18 @@ namespace RestaurangXXLSuperWorld
             //    Thread.Sleep(FrameTime - (((int)timer.Elapsed.TotalMilliseconds) % 1000));
 
 
-            Restaurant restaurant = new Restaurant();
+
+            Restaurant restaurant = new Restaurant(10);
             restaurant.PopulateTables();
+            restaurant.Draw();
             restaurant.PopulateWaiters();
-            restaurant.Update();
+            while (true)
+            {
+                restaurant.Update();
+                Console.ReadLine();
+            }
 
-
-            Console.ReadLine();
-
-
-            //restaurant.Draw();
+            
 
 
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace RestaurangXXLSuperWorld.RestaurantLogic {
     internal class SmallTable : Table
     {
-        private int _sizeX = 9;       
+        private int _sizeX = 12;       
         private int _sizeY = 5;
 
         public SmallTable(int positionX, int positionY) : base(positionX, positionY)

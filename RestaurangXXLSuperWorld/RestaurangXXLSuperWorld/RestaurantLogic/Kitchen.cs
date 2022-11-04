@@ -1,5 +1,6 @@
 ﻿using RestaurangXXLSuperWorld.Food;
 using RestaurangXXLSuperWorld.Persons;
+using RestaurangXXLSuperWorld.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,14 @@ using System.Threading.Tasks;
 namespace RestaurangXXLSuperWorld.RestaurantLogic {
     internal class Kitchen 
     {
-        private char[] charSet = { '╦', '═', '╦', '║', '╚', '╝' };
+        private char[] charSet = { '╠', '═', '╗', '║', '╠', '╝' };
         private ConsoleColor Color = ConsoleColor.Red;
 
-        private int positionX = 50;
-        private int positionY = 1;
+        internal int positionX;
+        internal int positionY = 21;
 
-        private int sizeX = 10;
-        private int sizeY = 4;
+        internal int sizeX = 15;
+        internal int sizeY = 9;
 
         private List<Customer> slaveCustomer = new List<Customer>();
         private List<Customer> masterCustomer = new List<Customer>();
@@ -29,7 +30,15 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private Queue<Order> cookingQueue = new Queue<Order>();
         private Queue<Order> deliveryQueue = new Queue<Order>();
 
+        internal Kitchen(int positionX, int sizeX)
+        {
+            this.positionX = (positionX + sizeX + 1);
+        }
 
+        internal void Draw()
+        {
+            GUI.RestaurantPrinter(sizeX, sizeY, positionX, positionY, charSet, ConsoleColor.Red);
+        }
 
         internal void Update()
         {

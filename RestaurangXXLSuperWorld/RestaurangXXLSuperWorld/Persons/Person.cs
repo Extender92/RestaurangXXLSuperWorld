@@ -6,10 +6,20 @@ using System.Threading.Tasks;
 
 namespace RestaurangXXLSuperWorld.Persons {
     internal abstract class Person {
-        private readonly string _name;
-        public string Name { get => _name; }
+        private readonly string _firstname;
+        private readonly string _lastname;
+        public string FirstName { get => _firstname; }
+        public string LastName { get => _lastname; }
+
         public Person() {
-            _name = NameGenerator.GetName();
+            _firstname = NameGenerator.GetFirstName();
+            _lastname = NameGenerator.GetLastName();
+
+
         }
+
+       
     }
+
+    
 }

@@ -12,8 +12,8 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         internal static char[] charSet = { '┌', '─', '┐', '│', '└', '┘' };
         private ConsoleColor Color = ConsoleColor.Blue;
 
-        private int positionX { get; set; }
-        private int positionY { get; set; }
+        internal int positionX { get; set; }
+        internal int positionY { get; set; }
 
         protected abstract int SizeX { get; }
         protected abstract int SizeY { get; }
@@ -59,12 +59,17 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         internal void PrintParty()
         {
             if (seatedGuests != null)
-                Console.WriteLine(seatedGuests.Size());
-            else
-                Console.WriteLine(0);
+                GUI.PartyTablePrinter(this);
+            //else
+            //    Console.WriteLine(0);
         }
         internal void Update() {
 
         }
+        internal List<Customer> GetParty()
+        {
+            return seatedGuests.getParty().ToList();
+        }
+    
     }
 }

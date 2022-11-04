@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RestaurangXXLSuperWorld.Persons;
+using RestaurangXXLSuperWorld.RestaurantLogic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +10,12 @@ namespace RestaurangXXLSuperWorld.View
 {
     internal class GUI
     {
+        static int waitersAtKitchen = 0;
+
+        static int waitersAtQueue = 0;
+
+
+
         //internal static void DrawRestaurant()
         //{
         //    //char[,] characters = { { '╚', '╝', '╬', '═', '╩', '╠', '╣', '╦', '╔', '╗', '║' }, { '└', '┘', '┼', '─', '┴', '├', '┤', '┬', '┌', '┐', '│' } };
@@ -77,6 +85,57 @@ namespace RestaurangXXLSuperWorld.View
             for (int i = 0; i < width; i++)
                 Console.Write(characters[1]);
             Console.Write(characters[5]);
+        }
+
+        internal static void PartyTablePrinter(Table table)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.SetCursorPosition((table.positionX + 1), (table.positionY + 3));
+            Console.Write(table.GetParty()[0].LastName + " " + (table.GetParty().Count - 1));
+                       
+        }
+
+        internal static void DrawWaiterAtTable(Table table, Waiter? waiter)
+        {
+            if (waiter == null)
+            {
+                Console.SetCursorPosition(table.positionX, (table.positionY - 1));
+                Console.Write(new string(' ', 21));
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.SetCursorPosition(table.positionX, (table.positionY - 1));
+                Console.Write("[Servitör: " + waiter.FirstName + "]");
+            }            
+        }
+        internal static void DrawWaiterAtQueue()
+        {
+
+        }
+        internal static void DrawWaiterAtKitchen(Kitchen kitchen, Waiter? waiter)
+        {            
+            if (waiter == null)
+            {
+                for (int i = 0; i < 3; i++)
+                {                    
+                    Console.SetCursorPosition(kitchen.positionX - 21, (kitchen.positionY + 2 + i));
+                    Console.Write(new string(' ', 21));
+                }                
+            }
+            else
+            {
+                waitersAtKitchen++;
+                string waiterName = "[Servitör: " + waiter.FirstName + "]";
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.SetCursorPosition(kitchen.positionX - waiterName.Length, (kitchen.positionY + 1 + waitersAtKitchen));
+                Console.Write(waiterName);
+            }
+        }
+        internal static void ResetStatics()
+        {
+            waitersAtKitchen = 0;
+            waitersAtQueue = 0; 
         }
     }
 }

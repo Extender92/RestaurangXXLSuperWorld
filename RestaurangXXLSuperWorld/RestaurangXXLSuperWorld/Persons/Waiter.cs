@@ -1,4 +1,5 @@
 ﻿using RestaurangXXLSuperWorld.RestaurantLogic;
+using RestaurangXXLSuperWorld.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,7 +92,14 @@ namespace RestaurangXXLSuperWorld.Persons {
                 party = GetSuitableParty(table.GetNumberOfChairs());
                 if(party != null) {
                     table.SeatGuests(party);
+                    GUI.DrawWaiterAtTable(table, this);
+
                 }
+                
+            }
+            else
+            {
+                GUI.DrawWaiterAtKitchen(kitchen, this);
             }
             
 
