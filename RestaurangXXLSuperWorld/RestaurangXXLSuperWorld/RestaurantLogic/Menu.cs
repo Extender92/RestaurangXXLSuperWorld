@@ -11,12 +11,17 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         internal List<FoodItem> GetSuitableDishes () {
             return itemsOnMenu;
         }
-        internal Menu () {
+        internal Menu() {
             itemsOnMenu.AddRange(new FoodItem[] { new MeatOne(), new MeatTwo(), new MeatThree(), 
                                                   new FishOne(), new FishTwo(), new FishThree(), 
                                                   new VegOne(), new VegTwo(), new VegThree() 
                                                 }
                                 );
+
         }
+        internal T OrderOneOf<T>(T placeholder) where T : new() {
+            return new T();
+        }
+
     }
 }

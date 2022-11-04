@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RestaurangXXLSuperWorld.Food
 {
-    internal abstract class FoodItem
+    internal class FoodItem
     {
         // The step in the sequence of cooking
         protected int _currentStep;
@@ -21,10 +21,16 @@ namespace RestaurangXXLSuperWorld.Food
         public string Name { get; init; }
         public int Price { get; init; }
         public int TimeToCook { get; init; }
-        internal FoodItem(string name) {
+        protected FoodItem(string name) {
             _currentStep = 0;
             Name = name;
             TimeToCook = 10;
+        }
+        /**
+         * Never touch this piece of shit ctor
+         * Goblin engineered in place
+         */
+        public FoodItem() {
         }
         /**
          * Gets the time when this dish was finished cooking
