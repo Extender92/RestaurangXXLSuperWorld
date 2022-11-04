@@ -26,11 +26,17 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private List<Order> completedOrders = new();
         private Kitchen kitchen = new();
 
-        private void PopulateWaiters()
+        internal void PopulateWaiters()
         {
             for (int i = 0; i < 3; i++)
             {
                 waiters.Add(new Waiter());
+            }
+            foreach (Waiter waiter in waiters)
+            {
+                waiter.SetKitchen(kitchen);
+                waiter.SetTables(tables);
+                waiter.SetRestaurantQueue(restaurantQueue);
             }
         }
   
@@ -55,9 +61,19 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         /**
          * Updates the restaurant one discrete timestep
          */
-        internal void Update() {
-
+        internal void Update()
+        {
+            foreach (Waiter waiter in waiters)
+            {
+                waiter.Update();
+            }
+            foreach (Table table in tables)
+            {
+                table.PrintParty();
+            }
         }
+
+   
 
 
         internal void Draw()

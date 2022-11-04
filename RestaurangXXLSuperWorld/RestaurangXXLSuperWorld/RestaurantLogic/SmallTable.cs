@@ -17,6 +17,11 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
 
         protected override int SizeX => _sizeX;
         protected override int SizeY => _sizeY;
+
+        internal override int GetNumberOfChairs()
+        {
+            return 2;
+        }
     }
     
 }

@@ -26,6 +26,8 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
 
         internal Menu TodaysMenu { get; set; }
 
+        internal abstract int GetNumberOfChairs();
+
         internal Table (int positionX, int positionY)
         {
             this.positionX = positionX;
@@ -41,6 +43,23 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         {
             positionX = posX;
             positionY = posY;
+        }
+
+        internal bool IsFree()
+        {
+            if (seatedGuests == null) return true;
+            return false;
+        }
+
+        internal void SeatGuests(Party<Customer> party)
+        {
+            seatedGuests = party;
+        }
+
+        internal void PrintParty()
+        {
+            if (seatedGuests != null)
+            Console.WriteLine(seatedGuests.Size());          
         }
     }
 }
