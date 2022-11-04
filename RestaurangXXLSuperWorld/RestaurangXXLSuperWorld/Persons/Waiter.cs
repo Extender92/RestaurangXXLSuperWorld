@@ -84,12 +84,14 @@ namespace RestaurangXXLSuperWorld.Persons {
 
             // See if any Table can have guests
             Table? table = FindEmptyTable();
-
             Party<Customer>? party;
 
             if (table is not null)
             {
                 party = GetSuitableParty(table.GetNumberOfChairs());
+                if(party != null) {
+                    table.SeatGuests(party);
+                }
             }
             
 

@@ -59,7 +59,9 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         internal void PrintParty()
         {
             if (seatedGuests != null)
-            Console.WriteLine(seatedGuests.Size());          
+                Console.WriteLine(seatedGuests.Size());
+            else
+                Console.WriteLine(0);
         }
     }
 }
