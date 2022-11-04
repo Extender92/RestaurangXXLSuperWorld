@@ -39,13 +39,14 @@ namespace RestaurangXXLSuperWorld
         //    }
 
             Menu menu = new Menu();
+            menu.DisplayMenu();
             List<FoodItem> foods= menu.GetSuitableDishes();
             int rand;
             Random rand2 = new();
             int index = rand2.Next(0, foods.Count);
             FoodItem food = foods[index];
             FoodItem food2 = menu.OrderOneOf<FoodItem>(food);
-            Console.WriteLine(food.Name + " " + food.Price);
+            Console.WriteLine("Någon ville ha en " + food.Name + " till priset av " + food.Price);
 
 
             //GUI.DrawRestaurant();
