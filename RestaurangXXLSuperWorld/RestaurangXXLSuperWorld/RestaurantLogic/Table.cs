@@ -63,5 +63,8 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
             else
                 Console.WriteLine(0);
         }
+        internal void Update() {
+
+        }
     }
 }

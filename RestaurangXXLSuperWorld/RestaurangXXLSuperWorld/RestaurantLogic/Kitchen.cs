@@ -31,7 +31,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
 
 
 
-        private void Update()
+        internal void Update()
         {
             KitchenActivities();
             CookingActivities();
@@ -39,12 +39,10 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
 
         private void CookingActivities()
         {
-            throw new NotImplementedException();
         }
 
         private void KitchenActivities()
         {
-            throw new NotImplementedException();
         }
 
         private void populateChefs()
