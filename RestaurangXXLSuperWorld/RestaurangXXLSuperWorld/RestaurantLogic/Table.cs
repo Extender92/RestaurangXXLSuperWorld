@@ -30,6 +30,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         {
             this.positionX = positionX;
             this.positionY = positionY;
+            TodaysMenu = new Menu ();
         }
         internal void Draw()
         {

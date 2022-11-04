@@ -52,6 +52,12 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
                 table.Draw();
             }
         }
+        /**
+         * Updates the restaurant one discrete timestep
+         */
+        internal void Update() {
+
+        }
 
 
         internal void Draw()
