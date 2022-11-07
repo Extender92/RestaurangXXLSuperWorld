@@ -71,10 +71,11 @@ namespace RestaurangXXLSuperWorld
             restaurant.PopulateTables();
             restaurant.Draw();
             restaurant.PopulateWaiters();
+            Console.CursorVisible = false;
             while (true)
             {
                 restaurant.Update();
-                Console.ReadLine();
+                Console.ReadKey(true);
             }
 
             
