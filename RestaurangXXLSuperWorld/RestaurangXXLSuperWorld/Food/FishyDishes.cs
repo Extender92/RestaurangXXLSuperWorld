@@ -25,6 +25,9 @@ namespace RestaurangXXLSuperWorld.Food {
                 "Lägger på en kvist Persilja"
             };
         }
+        public override object Clone() {
+            return new FishOne();
+        }
     }
     internal class FishTwo : FishyDish {
         public FishTwo() : base("Crispy Homemade Fish Dicks with white sauce") {
@@ -42,6 +45,9 @@ namespace RestaurangXXLSuperWorld.Food {
                 "Lägger på en hög bostongurka"
             };
         }
+        public override object Clone() {
+            return new FishTwo();
+        }
     }
     internal class FishThree : FishyDish {
         public FishThree() : base("California Sushi Rolls") {
@@ -58,6 +64,9 @@ namespace RestaurangXXLSuperWorld.Food {
                 "Lägger upp maten på ett fat",
                 "Lägger på en klick wasabi, majonnäs och avslutar med några drag med ketchupflaskan"
             };
+        }
+        public override object Clone() {
+            return new FishThree();
         }
     }
 }

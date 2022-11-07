@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RestaurangXXLSuperWorld.RestaurantLogic {
     internal class Menu {
-        private List<FoodItem> _itemsOnMenu = new List<FoodItem>();
+        private readonly List<FoodItem> _itemsOnMenu = new ();
         internal List<FoodItem> GetSuitableDishes () {
             return _itemsOnMenu;
         }
@@ -19,8 +19,8 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
                                 );
 
         }
-        internal T OrderOneOf<T>(T placeholder) where T : new() {
-            return new T();
+        internal T OrderOneOf<T>(T placeholder) where T : ICloneable {
+            return (T)placeholder.Clone();
         }
 
         /**

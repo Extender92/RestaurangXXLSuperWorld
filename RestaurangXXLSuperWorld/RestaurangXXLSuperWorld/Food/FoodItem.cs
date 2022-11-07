@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RestaurangXXLSuperWorld.Food
 {
-    internal class FoodItem
+    internal class FoodItem : ICloneable
     {
         // The step in the sequence of cooking
         protected int _currentStep;
@@ -57,5 +57,9 @@ namespace RestaurangXXLSuperWorld.Food
          * Gets the current steps as a string description of the cooking process
          */
         internal virtual string GetCurrentStep() { return _cookingSteps[_currentStep]; }
+
+        public virtual object Clone() {
+            return new FoodItem();
+        }
     }
 }

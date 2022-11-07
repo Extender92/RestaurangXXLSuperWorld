@@ -28,6 +28,9 @@ namespace RestaurangXXLSuperWorld.Food
                 "Lägger på picklad lök"
             };
         }
+        public override object Clone() {
+            return new MeatOne();
+        }
     }
     internal class MeatTwo : MeatDish
     {
@@ -46,6 +49,9 @@ namespace RestaurangXXLSuperWorld.Food
                 "Häller upp några glas vin"
             };
         }
+        public override object Clone() {
+            return new MeatTwo();
+        }
     }
     internal class MeatThree : MeatDish
     {
@@ -63,6 +69,9 @@ namespace RestaurangXXLSuperWorld.Food
                 "Lägger upp mat på varm metallbricka",
                 "Lägger på persilja och dragon"
             };
+        }
+        public override object Clone() {
+            return new MeatThree();
         }
     }
 }

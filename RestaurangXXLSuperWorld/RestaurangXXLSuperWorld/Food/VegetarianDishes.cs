@@ -27,6 +27,9 @@ namespace RestaurangXXLSuperWorld.Food
                 "Lägger naan och grillad aubergine på sidofat"
             };
         }
+        public override object Clone() {
+            return new VegOne();
+        }
     }
     internal class VegTwo : VegetarianDish
     {
@@ -45,6 +48,9 @@ namespace RestaurangXXLSuperWorld.Food
                 "River parmesan över sallad och strör på krutonger"
             };
         }
+        public override object Clone() {
+            return new VegTwo();
+        }
     }
     internal class VegThree : VegetarianDish
     {
@@ -62,6 +68,9 @@ namespace RestaurangXXLSuperWorld.Food
                 "Lägger upp på ett stort fat",
                 "Beundrar sitt mästerverk"
             };
+        }
+        public override object Clone() {
+            return new VegThree();
         }
     }
 }
