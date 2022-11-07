@@ -35,7 +35,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         }
 
         public void DebugPrintOrder(int col, int row) {
-            //Console.SetCursorPosition(col, row);
+            Console.SetCursorPosition(col, row);
             Console.WriteLine(Step.ToString());
             if (_dishes.Count > 0) {
                 foreach(FoodItem dish in _dishes) {
