@@ -32,7 +32,7 @@ namespace RestaurangXXLSuperWorld.Persons {
             items = items.OrderBy(x => random.Next()).ToArray();
             foreach (FoodItem item in items) {
                 if (DishStrikesFancy(item)) {
-                    return item;
+                    return menu.OrderOneOf(item);
                 }
             }
             return GetRandomDish(menu);
@@ -48,7 +48,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         private FoodItem GetRandomDish(Menu menu) {
             Random random = new Random();
             FoodItem[] items = menu.GetSuitableDishes().ToArray();
-            return items[random.Next(items.Length)];
+            return menu.OrderOneOf(items[random.Next(items.Length)]);
         }
     }
 }

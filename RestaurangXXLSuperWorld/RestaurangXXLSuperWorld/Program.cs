@@ -8,6 +8,23 @@ namespace RestaurangXXLSuperWorld {
     internal class Program {
         private static readonly int FrameTime = 1000; //ms
         static void Main() {
+            Restaurant restaurant = new Restaurant(10);
+            restaurant.PopulateTables();
+            restaurant.Draw();
+            restaurant.PopulateWaiters();
+            SimpleTimer timer = new SimpleTimer(FrameTime);
+            Console.CursorVisible = false;
+            while (true) {
+                restaurant.Update();
+                Thread.Sleep(FrameTime - timer.ElapsedMillisecs());
+                ////var currentTimeFormated = DateTime.Now.ToString(@"{0:mm:ss.ffff}");
+                ////Console.SetCursorPosition(0,60);
+                ////Console.WriteLine(currentTimeFormated);
+                restaurant.PostUpdate();
+
+            }
+        }
+        static void Debug(Restaurant restaurant) {
             //    //PersonTester
             //    Person p1 = new Customer();
             //    Person p2 = new Customer();
@@ -35,39 +52,8 @@ namespace RestaurangXXLSuperWorld {
             //        Console.WriteLine(customer.Satisfaction);
             //    }
 
-            //Menu menu = new Menu();
-            //menu.DisplayMenu();
-            //List<FoodItem> foods= menu.GetSuitableDishes();
-            //int rand;
-            //Random rand2 = new();
-            //int index = rand2.Next(0, foods.Count);
-            //FoodItem food = foods[index];
-            //FoodItem food2 = menu.OrderOneOf<FoodItem>(food);
-            //Console.WriteLine("Någon ville ha en " + food.Name + " till priset av " + food.Price);
-
-
-            //GUI.DrawRestaurant();
-            //Console.ReadLine();
-
-
-            Restaurant restaurant = new Restaurant(10);
-            restaurant.PopulateTables();
-            restaurant.Draw();
-            restaurant.PopulateWaiters();
-            SimpleTimer timer = new SimpleTimer(FrameTime);
-            Console.CursorVisible = false;
-            while (true) {
-                restaurant.Update();
-                Thread.Sleep(FrameTime - timer.ElapsedMillisecs());
-                //Console.WriteLine(timer.GetDelta());
-                ////var currentTimeFormated = DateTime.Now.ToString(@"{0:mm:ss.ffff}");
-                ////Console.SetCursorPosition(0,60);
-                ////Console.WriteLine(currentTimeFormated);
-                restaurant.PostUpdate();
-
-                restaurant.PrintTableOrders();
-
-            }
+            Console.WriteLine("En rad med skit");
+            restaurant.PrintTableOrders();
         }
     }
 }
