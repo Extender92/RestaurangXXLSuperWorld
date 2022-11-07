@@ -110,7 +110,7 @@ namespace RestaurangXXLSuperWorld.Persons {
             Order newOrder = possibleOrders.First();
             kitchen.AddToCookingQueue(newOrder);
             newOrder.UpdateOrder();
-            newOrder.DebugPrintOrder(0 , 100);
+            newOrder.DebugPrintOrder(0 , 0);
         }
         internal void CleanTable() 
         {
@@ -128,7 +128,10 @@ namespace RestaurangXXLSuperWorld.Persons {
             // See if any Party wants to leave (clean table and collect tip)
 
             // See if any Table can have guests
-            PlacePartyAtTable();
+            if (!PlacePartyAtTable())
+            {
+                TakeOrderFromTable();
+            }
             
 
             // If can have guest, fetch a party fitting the slot

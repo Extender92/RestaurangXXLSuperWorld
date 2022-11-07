@@ -30,7 +30,10 @@ namespace RestaurangXXLSuperWorld.Food
          * Never touch this piece of shit ctor
          * Goblin engineered in place
          */
-        public FoodItem() {
+        
+        public FoodItem() 
+        {
+            Console.WriteLine("hej hej jag är här hej hej jag är härhej hej jag är härhej hej jag är härhej hej jag är härhej hej jag är härhej hej jag är här");
         }
         /**
          * Gets the time when this dish was finished cooking
