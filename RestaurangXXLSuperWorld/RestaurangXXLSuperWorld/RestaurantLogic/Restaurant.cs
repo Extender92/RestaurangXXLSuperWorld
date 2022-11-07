@@ -82,12 +82,6 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
                 table.Update();
             }
             kitchen.Update();
-            Thread.Sleep(1000);
-            foreach (Table table in tables)
-            {
-                GUI.DrawWaiterAtTable(table, null);             
-            }
-            GUI.DrawWaiterAtKitchen(kitchen, null);
         }
 
         internal void Draw()
@@ -96,6 +90,13 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
             kitchen.Draw();
             door.Draw();
 
+        }
+
+        internal void PostUpdate() {
+            foreach (Table table in tables) {
+                GUI.DrawWaiterAtTable(table, null);
+            }
+            GUI.DrawWaiterAtKitchen(kitchen, null);
         }
     }
 }

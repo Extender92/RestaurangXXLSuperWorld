@@ -4,13 +4,10 @@ using RestaurangXXLSuperWorld.RestaurantLogic;
 using RestaurangXXLSuperWorld.View;
 using System.Diagnostics;
 
-namespace RestaurangXXLSuperWorld
-{
-    internal class Program
-    {
+namespace RestaurangXXLSuperWorld {
+    internal class Program {
         private static readonly int FrameTime = 1000; //ms
-        static void Main()
-        {
+        static void Main() {
             //    //PersonTester
             //    Person p1 = new Customer();
             //    Person p2 = new Customer();
@@ -52,37 +49,22 @@ namespace RestaurangXXLSuperWorld
             //GUI.DrawRestaurant();
             //Console.ReadLine();
 
-            //Main Loop Skeleton
-
-            //Stopwatch timer = new Stopwatch();
-            //timer.Start();
-            //for (int frame = 0; true ; frame++) {
-            //    //Program Loop Here
-
-            //    //Timer Debug
-            //    Console.SetCursorPosition(0, 0);
-            //    Console.WriteLine($"Elapsed in program: {timer.Elapsed.TotalMilliseconds}");
-            //    //Wait without accumulating errors
-            //    Thread.Sleep(FrameTime - (((int)timer.Elapsed.TotalMilliseconds) % 1000));
-
-
 
             Restaurant restaurant = new Restaurant(10);
             restaurant.PopulateTables();
             restaurant.Draw();
             restaurant.PopulateWaiters();
+            SimpleTimer timer = new SimpleTimer(FrameTime);
             Console.CursorVisible = false;
-            while (true)
-            {
+            while (true) {
                 restaurant.Update();
-                Console.ReadKey(true);
+                Thread.Sleep(FrameTime - timer.ElapsedMillisecs());
+                //Console.WriteLine(timer.GetDelta());
+                var currentTimeFormated = DateTime.Now.ToString(@"{0:mm:ss.ffff}");
+                Console.SetCursorPosition(0,60);
+                Console.WriteLine(currentTimeFormated);
+                restaurant.PostUpdate();
             }
-
-            
-
-
-
-
-        }    
+        }
     }
 }

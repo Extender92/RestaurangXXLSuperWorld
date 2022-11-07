@@ -22,7 +22,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private double qualityLevel;
         private Party<Customer>? seatedGuests;
 
-        internal Order? PlacedOrder { get; set; }
+        internal Order TablesOrder { get; set; }
 
         internal Menu TodaysMenu { get; set; }
 
@@ -33,6 +33,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
             this.positionX = positionX;
             this.positionY = positionY;
             TodaysMenu = new Menu ();
+            TablesOrder = new Order(this);
         }
         internal void Draw()
         {
