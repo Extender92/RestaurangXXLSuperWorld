@@ -54,6 +54,11 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         {
         }
 
+        internal void AddToCookingQueue(Order order)
+        {
+            cookingQueue.Enqueue(order);
+        }
+
         private void populateChefs()
         {
             for (int i = 0; i < 5; i++)

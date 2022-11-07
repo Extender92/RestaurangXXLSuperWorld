@@ -2,6 +2,7 @@
 using RestaurangXXLSuperWorld.RestaurantLogic;
 using RestaurangXXLSuperWorld.View;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -91,14 +92,28 @@ namespace RestaurangXXLSuperWorld.Persons {
             }
             table.TablesOrder.OrderFood(orderDishes);
             table.TablesOrder.UpdateOrder();
+            table.TablesOrder.AssignWaiter(this);
         }
-        internal void TakeOrderFromTable() {
-
+        internal void TakeOrderFromTable() 
+        {
+            var possibleOrders = from table in tables
+                                 where table.TablesOrder.SingleWaiter == this && table.TablesOrder.Step == OrderSteps.ToBeOrdered
+                                 select table.TablesOrder;
+            if (possibleOrders != null && possibleOrders.Count() > 0)
+            {
+                DeliverOrderToKitchen(possibleOrders);
+                
+            }
         }
-        internal void DeliverOrderToKitchen() {
-
+        internal void DeliverOrderToKitchen(IEnumerable <Order> possibleOrders) 
+        {
+            Order newOrder = possibleOrders.First();
+            kitchen.AddToCookingQueue(newOrder);
+            newOrder.UpdateOrder();
+            newOrder.DebugPrintOrder(0 , 100);
         }
-        internal void CleanTable() {
+        internal void CleanTable() 
+        {
 
         }
         internal void Update() {

@@ -21,7 +21,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private int _totalSum;
         internal int PaidSum { get; set; }
         internal Table Target { get; private set; }
-        private Waiter? SingleWaiter { get; set; }
+        internal Waiter? SingleWaiter { get; set; }
 
         internal Order(Table target) {
             Target = target;
