@@ -98,5 +98,12 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
             }
             GUI.DrawWaiterAtKitchen(kitchen, null);
         }
+
+        internal void PrintTableOrders() {
+            int index = 0;
+            foreach(Table table in tables) {
+                table.TablesOrder.DebugPrintOrder(0, 60);
+            }
+        }
     }
 }

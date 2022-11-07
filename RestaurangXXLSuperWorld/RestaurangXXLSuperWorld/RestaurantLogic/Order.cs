@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace RestaurangXXLSuperWorld.RestaurantLogic {
     internal enum OrderSteps {
         Initial,
-        ToBeOrdered,
-        ToBeCooked,
-        Cooked,
-        Delivered,
-        Finished
+        ToBeOrdered,  //Collected from Table
+        ToBeCooked,   //Delivered to kitchen queue
+        Cooked,       //In Kitchen output queue
+        Delivered,    //At table again
+        Finished      //Customer wants to leave
     }
     internal class Order {
         internal OrderSteps Step { get; private set; }
@@ -21,7 +21,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private int _totalSum;
         internal int PaidSum { get; set; }
         internal Table Target { get; private set; }
-        private Waiter? SingleWaiter;
+        private Waiter? SingleWaiter { get; set; }
 
         internal Order(Table target) {
             Target = target;
@@ -35,11 +35,14 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         }
 
         public void DebugPrintOrder(int col, int row) {
-            Console.SetCursorPosition(col, row);
+            //Console.SetCursorPosition(col, row);
             Console.WriteLine(Step.ToString());
             if (_dishes.Count > 0) {
                 foreach(FoodItem dish in _dishes) {
-                    Console.WriteLine(dish.Name);
+                    Console.WriteLine(dish.Price + "\t" +dish.Name);
+                }
+                foreach(Customer cust in Target.GetParty()) {
+                    Console.WriteLine(cust.Money);
                 }
             }
         }

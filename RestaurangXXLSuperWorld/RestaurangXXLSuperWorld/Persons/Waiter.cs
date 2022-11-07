@@ -1,4 +1,5 @@
-﻿using RestaurangXXLSuperWorld.RestaurantLogic;
+﻿using RestaurangXXLSuperWorld.Food;
+using RestaurangXXLSuperWorld.RestaurantLogic;
 using RestaurangXXLSuperWorld.View;
 using System;
 using System.Collections.Generic;
@@ -63,6 +64,34 @@ namespace RestaurangXXLSuperWorld.Persons {
         internal void SetTables(List<Table> tables) {
             this.tables = tables;
         }
+        internal bool PlacePartyAtTable() {
+            Table? table = FindEmptyTable();
+            Party<Customer>? party;
+
+            if (table is not null) {
+                party = GetSuitableParty(table.GetNumberOfChairs());
+                if (party != null) {
+                    table.SeatGuests(party);
+                    GUI.DrawWaiterAtTable(table, this);
+                    PresentTodaysMenu(table, party);
+                }
+
+            } 
+            else {
+                GUI.DrawWaiterAtKitchen(kitchen, this);
+                return false;
+            }
+            return true;
+        }
+        internal void PresentTodaysMenu(Table table, Party<Customer> party) {
+            Menu menu = table.TodaysMenu;
+            List<FoodItem> orderDishes = new();
+            foreach(Customer customer in party.getParty()) {
+                orderDishes.Add(customer.GetDishToOrder(menu));
+            }
+            table.TablesOrder.OrderFood(orderDishes);
+            table.TablesOrder.UpdateOrder();
+        }
         internal void TakeOrderFromTable() {
 
         }
@@ -84,23 +113,7 @@ namespace RestaurangXXLSuperWorld.Persons {
             // See if any Party wants to leave (clean table and collect tip)
 
             // See if any Table can have guests
-            Table? table = FindEmptyTable();
-            Party<Customer>? party;
-
-            if (table is not null)
-            {
-                party = GetSuitableParty(table.GetNumberOfChairs());
-                if(party != null) {
-                    table.SeatGuests(party);
-                    GUI.DrawWaiterAtTable(table, this);
-
-                }
-                
-            }
-            else
-            {
-                GUI.DrawWaiterAtKitchen(kitchen, this);
-            }
+            PlacePartyAtTable();
             
 
             // If can have guest, fetch a party fitting the slot

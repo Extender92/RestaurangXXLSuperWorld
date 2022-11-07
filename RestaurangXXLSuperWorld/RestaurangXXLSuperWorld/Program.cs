@@ -60,10 +60,13 @@ namespace RestaurangXXLSuperWorld {
                 restaurant.Update();
                 Thread.Sleep(FrameTime - timer.ElapsedMillisecs());
                 //Console.WriteLine(timer.GetDelta());
-                var currentTimeFormated = DateTime.Now.ToString(@"{0:mm:ss.ffff}");
-                Console.SetCursorPosition(0,60);
-                Console.WriteLine(currentTimeFormated);
+                ////var currentTimeFormated = DateTime.Now.ToString(@"{0:mm:ss.ffff}");
+                ////Console.SetCursorPosition(0,60);
+                ////Console.WriteLine(currentTimeFormated);
                 restaurant.PostUpdate();
+
+                restaurant.PrintTableOrders();
+
             }
         }
     }

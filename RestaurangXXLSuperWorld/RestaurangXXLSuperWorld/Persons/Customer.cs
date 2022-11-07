@@ -13,7 +13,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         public double Satisfaction { get; private set; }
         public Customer() {
             Random random = new Random();
-            Money = random.Next(250, 501);
+            Money = random.Next(120, 361);
         }
         private void FillWallet(int amount = 250) {
             Money += amount;
@@ -27,10 +27,28 @@ namespace RestaurangXXLSuperWorld.Persons {
             return 0;
         }
         internal FoodItem GetDishToOrder(Menu menu) {
+            Random random = new Random();
+            FoodItem[] items = menu.GetSuitableDishes().ToArray();
+            items = items.OrderBy(x => random.Next()).ToArray();
+            foreach (FoodItem item in items) {
+                if (DishStrikesFancy(item)) {
+                    return item;
+                }
+            }
+            return GetRandomDish(menu);
+        }
 
+        private bool CanAfford(FoodItem item) {
+            return item.Price < this.Money;
+        }
 
-            //Default Order
-            return new MeatOne();
+        private bool DishStrikesFancy(FoodItem item) {
+            return (item.Price * 1.2) < (this.Money);
+        }
+        private FoodItem GetRandomDish(Menu menu) {
+            Random random = new Random();
+            FoodItem[] items = menu.GetSuitableDishes().ToArray();
+            return items[random.Next(items.Length)];
         }
     }
 }
