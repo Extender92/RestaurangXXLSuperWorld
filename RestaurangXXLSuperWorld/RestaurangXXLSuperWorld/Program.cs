@@ -8,21 +8,23 @@ namespace RestaurangXXLSuperWorld {
     internal class Program {
         private static readonly int FrameTime = 1000; //ms
         static void Main() {
-            Restaurant restaurant = new Restaurant(10);
-            restaurant.PopulateTables();
-            restaurant.Draw();
-            restaurant.PopulateWaiters();
-            SimpleTimer timer = new SimpleTimer(FrameTime);
-            Console.CursorVisible = false;
-            while (true) {
-                restaurant.Update();
-                Thread.Sleep(FrameTime - timer.ElapsedMillisecs());
-                ////var currentTimeFormated = DateTime.Now.ToString(@"{0:mm:ss.ffff}");
-                ////Console.SetCursorPosition(0,60);
-                ////Console.WriteLine(currentTimeFormated);
-                restaurant.PostUpdate();
+            Console.WriteLine(Math.Pow(0.95,4));
 
-            }
+            //Restaurant restaurant = new Restaurant(10);
+            //restaurant.PopulateTables();
+            //restaurant.Draw();
+            //restaurant.PopulateWaiters();
+            //SimpleTimer timer = new SimpleTimer(FrameTime);
+            //Console.CursorVisible = false;
+            //while (true) {
+            //    restaurant.Update();
+            //    Thread.Sleep(FrameTime - timer.ElapsedMillisecs());
+            //    ////var currentTimeFormated = DateTime.Now.ToString(@"{0:mm:ss.ffff}");
+            //    ////Console.SetCursorPosition(0,60);
+            //    ////Console.WriteLine(currentTimeFormated);
+            //    restaurant.PostUpdate();
+
+            //}
         }
         static void Debug(Restaurant restaurant) {
             //    //PersonTester
@@ -52,8 +54,8 @@ namespace RestaurangXXLSuperWorld {
             //        Console.WriteLine(customer.Satisfaction);
             //    }
 
-            Console.WriteLine("En rad med skit");
-            restaurant.PrintTableOrders();
+            //Console.WriteLine("En rad med skit");
+            //restaurant.PrintTableOrders();
         }
     }
 }
