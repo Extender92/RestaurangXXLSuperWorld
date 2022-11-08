@@ -112,6 +112,16 @@ namespace RestaurangXXLSuperWorld.Persons {
             newOrder.UpdateOrder();
             newOrder.DebugPrintOrder(0 , 0);
         }
+
+        internal void DeliverOrderToTable()
+        {
+            Order? delivery = kitchen.TakeFromDeliveryList(this);
+            if (delivery == null) 
+                return;
+            delivery.UpdateOrder();
+            GUI.DrawWaiterAtTable(delivery.Target, this);
+        }
+
         internal void CleanTable() 
         {
 
@@ -130,8 +140,12 @@ namespace RestaurangXXLSuperWorld.Persons {
             // See if any Table can have guests
             if (!PlacePartyAtTable())
             {
-                TakeOrderFromTable();
+                TakeOrderFromTable();                
             }
+            
+            
+            DeliverOrderToTable();
+            
             
 
             // If can have guest, fetch a party fitting the slot

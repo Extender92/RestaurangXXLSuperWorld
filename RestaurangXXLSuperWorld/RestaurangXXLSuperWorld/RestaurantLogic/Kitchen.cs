@@ -4,6 +4,7 @@ using RestaurangXXLSuperWorld.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,16 +24,19 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private List<Customer> masterCustomer = new List<Customer>();
 
         private List<Person> chefs = new List<Person>();
-        private List<Person> idleChefs = new List<Person>();
+        //private List<Person> idleChefs = new List<Person>();
 
         private List<Order> currentlyCooking = new List<Order>();
 
         private Queue<Order> cookingQueue = new Queue<Order>();
-        private Queue<Order> deliveryQueue = new Queue<Order>();
+        private List<Order> deliveryList = new List<Order>();
+
+
 
         internal Kitchen(int positionX, int sizeX)
         {
             this.positionX = (positionX + sizeX + 1);
+            populateChefs();
         }
 
         internal void Draw()
@@ -48,34 +52,41 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
 
         private void CookingActivities()
         {
-            if ((idleChefs != null) && (idleChefs.Any()))
+            foreach (Chef chef in chefs)
             {
-                foreach (Chef chef in idleChefs)
+                if (chef.isIdle && (cookingQueue != null) && (cookingQueue.Any()))
                 {
-                    if ((cookingQueue != null) && (cookingQueue.Any()))
-                    {
-                        Order newOrder = cookingQueue.Dequeue();
-                        currentlyCooking.Add(newOrder);
-                        chef.currentlyCooking = newOrder;
-                        chefs.Add(chef);
-                        idleChefs.Remove(chef);
-                    }
+                    Order newOrder = cookingQueue.Dequeue();
+                    currentlyCooking.Add(newOrder);
+                    chef.currentlyCooking = newOrder;
+                    chef.isIdle = false;
                 }
             }
 
             foreach (Chef chef in chefs)
             {
-                chef.Cooking();
+                if (!chef.isIdle)
+                chef.Cooking();              
             }
-
-            foreach (Order order in currentlyCooking)
+           
+            var cooking = currentlyCooking;
+            for (int i = 0; i < cooking.Count; i++)
             {
-                if (order.Step == OrderSteps.Cooked)
+                if (currentlyCooking[i].Step == OrderSteps.Cooked)
                 {
-                    deliveryQueue.Enqueue(order);
-                    currentlyCooking.Remove(order);
+                    deliveryList.Add(currentlyCooking[i]);
+                    cooking.Remove(currentlyCooking[i]);
                 }
             }
+            ////foreach (Order order in currentlyCooking)
+            //{
+            //    if (order.Step == OrderSteps.Cooked)
+            //    {
+            //        deliveryQueue.Enqueue(order);
+            //        cooking.Remove(order);
+            //    }
+            //}
+            currentlyCooking = cooking;
         }
 
         private void KitchenActivities()
@@ -86,6 +97,16 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         internal void AddToCookingQueue(Order order)
         {
             cookingQueue.Enqueue(order);
+        }
+
+        internal Order? TakeFromDeliveryList(Waiter waiter)
+        {
+            var deliveries = from delivery in deliveryList
+                             where delivery.SingleWaiter == waiter
+                             select delivery;
+            if (deliveries == null || deliveries.Count() == 0)
+                return null;    
+            return deliveries.First();
         }
 
         private void populateChefs()

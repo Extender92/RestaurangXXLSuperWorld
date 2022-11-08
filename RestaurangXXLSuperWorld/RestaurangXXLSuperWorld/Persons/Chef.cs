@@ -14,7 +14,10 @@ namespace RestaurangXXLSuperWorld.Persons {
         private List<string> specialities = new();
         private Menu menu = new();
 
+        internal bool isIdle;
+
         public Chef() {
+            isIdle = true;
             SetCompetence();
             SetSpecialities();
         }
@@ -62,6 +65,7 @@ namespace RestaurangXXLSuperWorld.Persons {
                 SetFoodQualityLevel();
                 currentlyCooking.UpdateOrder();
                 currentlyCooking = null;
+                isIdle = true;
             }
         }
     }
