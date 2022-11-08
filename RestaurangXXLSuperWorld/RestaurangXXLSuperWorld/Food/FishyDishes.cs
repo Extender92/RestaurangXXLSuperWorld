@@ -42,7 +42,7 @@ namespace RestaurangXXLSuperWorld.Food {
                 "Kokar Potatis",
                 "MOSAR POTATIS!!!!!",
                 "Lägger upp maten på tallrik",
-                "Lägger på en hög bostongurka"
+                "Final touches for favorite customer <3     8====D "
             };
         }
         public override object Clone() {

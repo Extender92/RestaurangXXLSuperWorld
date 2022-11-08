@@ -27,7 +27,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         private void SetQuality()
         {
             Random random = new();
-            ServiceQuality = random.NextDouble() * (96 - 1) + 1;
+            ServiceQuality = random.NextDouble() * (96 - 50) + 50;
         }
         private Table? FindEmptyTable()
         {

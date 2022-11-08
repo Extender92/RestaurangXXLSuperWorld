@@ -17,7 +17,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
     }
     internal class Order {
         internal OrderSteps Step { get; private set; }
-        private List<FoodItem> _dishes = new();
+        internal List<FoodItem> _dishes = new();
         private int _totalSum;
         internal int PaidSum { get; set; }
         internal Table Target { get; private set; }
