@@ -93,6 +93,7 @@ namespace RestaurangXXLSuperWorld.Persons {
             table.TablesOrder.OrderFood(orderDishes);
             table.TablesOrder.UpdateOrder();
             table.TablesOrder.AssignWaiter(this);
+            table.TablesOrder.StartOrder();
         }
         internal void TakeOrderFromTable() 
         {
@@ -110,7 +111,7 @@ namespace RestaurangXXLSuperWorld.Persons {
             Order newOrder = possibleOrders.First();
             kitchen.AddToCookingQueue(newOrder);
             newOrder.UpdateOrder();
-            newOrder.DebugPrintOrder(0 , 0);
+            //newOrder.DebugPrintOrder(0 , 0);
         }
 
         internal void DeliverOrderToTable()
@@ -119,6 +120,7 @@ namespace RestaurangXXLSuperWorld.Persons {
             if (delivery == null) 
                 return;
             delivery.UpdateOrder();
+            delivery.DeliverOrder();
             GUI.DrawWaiterAtTable(delivery.Target, this);
         }
 

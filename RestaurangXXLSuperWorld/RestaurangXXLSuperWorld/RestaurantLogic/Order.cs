@@ -17,6 +17,8 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
     }
     internal class Order {
         internal OrderSteps Step { get; private set; }
+        private DateTime? _timeDelivered;
+        private DateTime? _timeOrdered;
         internal List<FoodItem> _dishes = new();
         private int _totalSum;
         internal int PaidSum { get; set; }
@@ -54,12 +56,28 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
                 _dishes.Add(order);
             }
         }
+        internal void StartOrder() {
+            _timeOrdered = DateTime.Now;
+        }
+        internal void DeliverOrder() {
+            _timeDelivered = DateTime.Now;
+        }
         public void ResetOrder() {
+            _timeOrdered = null;
+            _timeDelivered = null;
             _totalSum = 0;
             PaidSum = 0;
             Step = OrderSteps.Initial;
             _dishes = new();
             SingleWaiter = null;
+        }
+
+        internal double TimeElapsed() {
+            if(_timeOrdered != null && _timeDelivered != null) {
+                return (_timeDelivered - _timeOrdered).Value.TotalSeconds;
+            } else {
+                return 99999;
+            }
         }
     }
 }

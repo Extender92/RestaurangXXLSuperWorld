@@ -24,7 +24,6 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private List<Customer> masterCustomer = new List<Customer>();
 
         private List<Person> chefs = new List<Person>();
-        //private List<Person> idleChefs = new List<Person>();
 
         private List<Order> currentlyCooking = new List<Order>();
 
@@ -78,14 +77,6 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
                     cooking.Remove(currentlyCooking[i]);
                 }
             }
-            ////foreach (Order order in currentlyCooking)
-            //{
-            //    if (order.Step == OrderSteps.Cooked)
-            //    {
-            //        deliveryQueue.Enqueue(order);
-            //        cooking.Remove(order);
-            //    }
-            //}
             currentlyCooking = cooking;
         }
 
@@ -105,8 +96,10 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
                              where delivery.SingleWaiter == waiter
                              select delivery;
             if (deliveries == null || deliveries.Count() == 0)
-                return null;    
-            return deliveries.First();
+                return null;
+            var temp = deliveries.First();
+            deliveryList.Remove(deliveries.First());
+            return temp;
         }
 
         private void populateChefs()

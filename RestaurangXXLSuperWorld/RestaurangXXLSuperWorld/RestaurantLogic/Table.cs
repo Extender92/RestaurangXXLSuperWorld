@@ -10,6 +10,14 @@ using System.Threading.Tasks;
 namespace RestaurangXXLSuperWorld.RestaurantLogic {
     internal abstract class Table
     {
+        internal enum TableStatus {
+            Initial,
+            Waiting,  // Waiting for food
+            Eating,   // Eating their food
+            Finished, // Wants to leave
+            Cleaning, // Waiter is cleaning table
+        }
+        private double eatingTime = 19.9D;
         internal static char[] charSet = { '┌', '─', '┐', '│', '└', '┘' };
         private ConsoleColor Color = ConsoleColor.Blue;
 
@@ -69,6 +77,11 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         }
         internal void Update() {
             _timeSinceCleaned++;
+            if(TablesOrder.Step == OrderSteps.Delivered && TablesOrder.TimeElapsed() > eatingTime) {
+                //Eating Food
+            } else if (TablesOrder.TimeElapsed() > eatingTime) {
+                TablesOrder.UpdateOrder();
+            }
         }
         // Fancy method for quality level when guests arrive based on time since cleaned and size (one man at big table == putin bad)
         private void DetermineTableQualityLevel() {
