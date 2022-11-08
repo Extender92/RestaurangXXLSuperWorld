@@ -2,6 +2,7 @@
 using RestaurangXXLSuperWorld.Persons;
 using RestaurangXXLSuperWorld.View;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private List<Person> chefs = new List<Person>();
         private List<Person> idleChefs = new List<Person>();
 
-        private List<FoodItem> currentlyCooking = new List<FoodItem>();
+        private List<Order> currentlyCooking = new List<Order>();
 
         private Queue<Order> cookingQueue = new Queue<Order>();
         private Queue<Order> deliveryQueue = new Queue<Order>();
@@ -48,10 +49,39 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
 
         private void CookingActivities()
         {
+            if ((idleChefs != null) && (idleChefs.Any()))
+            {
+                foreach (Chef chef in idleChefs)
+                {
+                    if ((cookingQueue != null) && (cookingQueue.Any()))
+                    {
+                        Order newOrder = cookingQueue.Dequeue();
+                        currentlyCooking.Add(newOrder);
+                        chef.currentlyCooking = newOrder;
+                        chefs.Add(chef);
+                        idleChefs.Remove(chef);
+                    }
+                }
+            }
+
+            foreach (Chef chef in chefs)
+            {
+                chef.Cooking();
+            }
+
+            foreach (Order order in currentlyCooking)
+            {
+                if (order.Step == OrderSteps.Cooked)
+                {
+                    deliveryQueue.Enqueue(order);
+                    currentlyCooking.Remove(order);
+                }
+            }
         }
 
         private void KitchenActivities()
         {
+
         }
 
         internal void AddToCookingQueue(Order order)
