@@ -80,9 +80,18 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
             currentlyCooking = cooking;
         }
 
-        private void KitchenActivities()
+        private string KitchenActivities()
         {
+            string activity = "";
+            if (masterCustomer.Count >= 0)
+                foreach (Customer customer in masterCustomer)
+                    activity += $"{customer.FirstName} diskar\n";
 
+            if (slaveCustomer.Count >= 0)
+                foreach (Customer customer in slaveCustomer)
+                    activity += $"{customer.FirstName} skalar potatis\n";
+
+            return activity;
         }
 
         internal void AddToCookingQueue(Order order)
