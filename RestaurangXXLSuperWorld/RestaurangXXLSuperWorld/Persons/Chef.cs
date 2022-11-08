@@ -15,6 +15,10 @@ namespace RestaurangXXLSuperWorld.Persons {
         private List<string> specialities = new();
         private Menu menu = new();
 
+        public Chef() {
+            SetCompetence();
+            SetSpecialities();
+        }
         private void SetCompetence()
         {
             Random random = new();
