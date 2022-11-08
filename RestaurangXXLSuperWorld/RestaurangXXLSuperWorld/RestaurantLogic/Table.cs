@@ -3,6 +3,7 @@ using RestaurangXXLSuperWorld.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,6 +21,8 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
 
 
         private double qualityLevel;
+        // Represents the number of updates since the table was cleaned
+        private int _timeSinceCleaned;
         private Party<Customer>? seatedGuests;
 
         internal Order TablesOrder { get; set; }
@@ -65,7 +68,13 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
             //    Console.WriteLine(0);
         }
         internal void Update() {
-
+            _timeSinceCleaned++;
+        }
+        // Fancy method for quality level when guests arrive based on time since cleaned and size (one man at big table == putin bad)
+        private void DetermineTableQualityLevel() {
+            double cleanModifier = 1.2D - 0.05D * _timeSinceCleaned;
+            double tableSizeModifier = 1.2D - 0.2 * (GetNumberOfChairs() - seatedGuests.Size());
+            qualityLevel = 10.0D * cleanModifier + tableSizeModifier;
         }
         internal List<Customer> GetParty()
         {
