@@ -23,7 +23,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private List<Person> waiters = new();
         private List<Table> tables = new();
         private RestaurantQueue<Party<Customer>> restaurantQueue = RestaurantQueue<Party<Customer>>.InitializeQueue(dailyCustomers);
-        private List<Order> completedOrders = new();
+        private int completedOrders;
         private Kitchen kitchen;
         private RestaurantDoor door;
 

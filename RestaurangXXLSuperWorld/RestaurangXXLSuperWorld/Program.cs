@@ -20,7 +20,7 @@ namespace RestaurangXXLSuperWorld {
                 ////var currentTimeFormated = DateTime.Now.ToString(@"{0:mm:ss.ffff}");
                 ////Console.SetCursorPosition(0,60);
                 ////Console.WriteLine(currentTimeFormated);
-                //restaurant.PostUpdate();
+                restaurant.PostUpdate();
 
             }
         }

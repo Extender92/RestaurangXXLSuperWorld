@@ -57,11 +57,15 @@ namespace RestaurangXXLSuperWorld.Persons {
         }
         /**
          * Gets a party of suitable Size in queue if there is one, else gets the first party in queue
+         * upperDelta determines how much the size of returned party can differ from wanted size
+         * 
+         * Returns party of size range (targetSize - delta, targetSize)
          */
-        public T GetSuitableParty(int maxSize) {
+        public T GetSuitableParty(int targetSize, int upperDelta = 0) {
             //Find the first entry matching size requirements
             foreach(T party in _groups) {
-                if(party.Size() <= maxSize) {
+                //party.Size() <= maxSize && (maxSize - party.Size()) >=2
+                if (party.Size() <= targetSize && (targetSize - party.Size() <= upperDelta)) {
                     T suitableParty = party;
                     _groups.Remove(suitableParty);
                     return suitableParty;
@@ -69,6 +73,12 @@ namespace RestaurangXXLSuperWorld.Persons {
             }
             //if we cannot find one, return the first unfitting group
             return GetFirstInQueue();
+        }
+        public void PutInFront(T item) {
+            if (item == null) {
+                return;
+            }
+            _groups.Insert(0,item);
         }
     }
 }

@@ -4,6 +4,7 @@ using RestaurangXXLSuperWorld.View;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,7 +44,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         private Party<Customer>? GetSuitableParty(int size)
         {
             if (queue is not null)
-                return queue.GetSuitableParty(size);
+                return queue.GetSuitableParty(size, 1);
             else 
                 return null;
         }
@@ -65,16 +66,18 @@ namespace RestaurangXXLSuperWorld.Persons {
         internal void SetTables(List<Table> tables) {
             this.tables = tables;
         }
-        internal bool PlacePartyAtTable() {
+        internal bool FindPartyForAvailableTable() {
             Table? table = FindEmptyTable();
             Party<Customer>? party;
 
             if (table is not null) {
                 party = GetSuitableParty(table.GetNumberOfChairs());
-                if (party != null) {
+                if (party is not null && party.Size() <= table.GetNumberOfChairs()) {
                     table.SeatGuests(party);
                     GUI.DrawWaiterAtTable(table, this);
                     PresentTodaysMenu(table, party);
+                } else if (party is not null) {
+                    queue.PutInFront(party);
                 }
 
             } 
@@ -84,6 +87,27 @@ namespace RestaurangXXLSuperWorld.Persons {
             }
             return true;
         }
+        internal bool FindTableForFirstPartyInQueue() {
+            Party<Customer>? firstParty;
+            Table? suitableTable;
+            firstParty = queue.GetFirstInQueue();
+            if (firstParty is not null) {
+                var freeTables = from table in tables where table.IsFree()
+                                 select table;
+                foreach (Table table in freeTables) {
+                    //party.Size() <= targetSize && (targetSize - party.Size() <= upperDelta
+                    if (firstParty.Size() <= table.GetNumberOfChairs() && table.GetNumberOfChairs() - firstParty.Size() <= 1) {
+                        table.SeatGuests(firstParty);
+                        GUI.DrawWaiterAtTable(table, this);
+                        PresentTodaysMenu(table, firstParty);
+                        return true;
+                    }
+                }
+            }
+            queue.PutInFront(firstParty);
+            return false;
+        }
+
         internal void PresentTodaysMenu(Table table, Party<Customer> party) {
             Menu menu = table.TodaysMenu;
             List<FoodItem> orderDishes = new();
@@ -95,7 +119,7 @@ namespace RestaurangXXLSuperWorld.Persons {
             table.TablesOrder.AssignWaiter(this);
             table.TablesOrder.StartOrder();
         }
-        internal void TakeOrderFromTable() 
+        internal bool TakeOrderFromTable() 
         {
             var possibleOrders = from table in tables
                                  where table.TablesOrder.SingleWaiter == this && table.TablesOrder.Step == OrderSteps.ToBeOrdered
@@ -103,8 +127,9 @@ namespace RestaurangXXLSuperWorld.Persons {
             if (possibleOrders != null && possibleOrders.Count() > 0)
             {
                 DeliverOrderToKitchen(possibleOrders);
-                
+                return true;
             }
+            return false;
         }
         internal void DeliverOrderToKitchen(IEnumerable <Order> possibleOrders) 
         {
@@ -114,14 +139,15 @@ namespace RestaurangXXLSuperWorld.Persons {
             //newOrder.DebugPrintOrder(0 , 0);
         }
 
-        internal void DeliverOrderToTable()
+        internal bool DeliverOrderToTable()
         {
             Order? delivery = kitchen.TakeFromDeliveryList(this);
             if (delivery == null) 
-                return;
+                return false;
             delivery.UpdateOrder();
             delivery.DeliverOrder();
             GUI.DrawWaiterAtTable(delivery.Target, this);
+            return true;
         }
 
         internal void CleanTable() 
@@ -133,20 +159,30 @@ namespace RestaurangXXLSuperWorld.Persons {
 
             // If available for work
 
-            // See if any food can be delivered to table by "this"
+              // See if any cooked order can be delivered to customer
+            if (DeliverOrderToTable()) {
+              // Try to take new orders
+            } else if (TakeOrderFromTable()) {
+              // Try to find a table for the first party in queue
+            } else if (FindTableForFirstPartyInQueue()) {
+             // Try to find a any party for table
+            } 
+            else if (FindPartyForAvailableTable()) {
+              // Idling
+            }
 
             // See if any table wants to order food
 
             // See if any Party wants to leave (clean table and collect tip)
 
             // See if any Table can have guests
-            if (!PlacePartyAtTable())
-            {
-                TakeOrderFromTable();                
-            }
+            //if (!FindPartyForAvailableTable())
+            //{
+            //    TakeOrderFromTable();                
+            //}
             
             
-            DeliverOrderToTable();
+            //DeliverOrderToTable();
             
             
 
