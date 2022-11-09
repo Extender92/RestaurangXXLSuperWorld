@@ -61,14 +61,18 @@ namespace RestaurangXXLSuperWorld.Persons {
             if(currentlyCooking is null) { 
                 return; 
             }
-            foreach (FoodItem dish in currentlyCooking._dishes)
+            doing = $"Kocken {this.FirstName} ";
+            foreach (FoodItem dish in currentlyCooking._dishes) {
+                doing += $"{dish.GetCurrentStep()}";
                 dish.Cook();
+            }
             if (currentlyCooking._dishes[0].IsDone)
             {
                 SetFoodQualityLevel();
                 currentlyCooking.UpdateOrder();
                 currentlyCooking = null;
                 isIdle = true;
+                doing = "idle";
             }
         }
     }
