@@ -16,9 +16,9 @@ namespace RestaurangXXLSuperWorld.Persons {
         private Kitchen? kitchen;
         // Turns cleaning table
         private RestaurantQueue<Party<Customer>>? queue;
-        private RestaurantDoor door;
+        private RestaurantDoor? door;
         private int tableCleaning;
-        private Table _tableToClean;
+        private Table? _tableToClean;
         private Order? _delivery;
         private Party<Customer>? _toEntable;
         //Reference to the tables the Waiter is Serving
@@ -26,7 +26,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         // Individual service quality representing the charisma and mood of the waiter 
         internal double ServiceQuality;
         private int CollectedTip { get; set; }
-        internal static int TotalCollectedTip { get; }
+        internal static int TotalCollectedTip { get; set; }
 
 
         private void SetQuality()
@@ -101,40 +101,44 @@ namespace RestaurangXXLSuperWorld.Persons {
                                  select table;
                 foreach (Table table in freeTables) {
                     if(largeTablesForSmallParties == true) {
-                        if (firstParty.First().Size() <= table.GetNumberOfChairs()) {
+                        if (firstParty.First().Size() <= table.GetNumberOfChairs() && (largeTablesForSmallParties ? true : table.GetNumberOfChairs() - firstParty.First().Size() <= 1)) {
                             return true;
                         }
-                    } else if (firstParty.First().Size() <= table.GetNumberOfChairs() && table.GetNumberOfChairs() - firstParty.First().Size() <= 1) {
-                        return true;
                     }
                 }
             }
             return false;
         }
-        private bool GetFirstPartyInQueue() {
+        private bool GetFirstPartyInQueue(bool largeTablesForSmallParties = false) {
             Party<Customer>? firstParty;
             firstParty = queue.GetFirstInQueue();
             if (firstParty is not null) {
                 _toEntable = firstParty;
-                return true;
-            }
-            return false;
-        }
-        private void PlacePartyAtTable(bool largeTablesForSmallParties = false) {
-            var freeTables = from table in tables where table.IsFree()
-                             select table;
-            foreach (Table table in freeTables) {
-                if (_toEntable.Size() <= table.GetNumberOfChairs() && (largeTablesForSmallParties ? true : table.GetNumberOfChairs() - _toEntable.Size() <= 1)) {
-                    table.SeatGuests(_toEntable);
-                    GUI.DrawWaiterAtTable(table, this);
-                    table.TablesOrder.AssignWaiter(this);
-                    PresentTodaysMenu(table, _toEntable);
-                    _toEntable = null;
-                    return;
+                var freeTables = from table in tables where table.IsFree()
+                                 select table;
+                foreach (Table table in freeTables) {
+                    if (_toEntable.Size() <= table.GetNumberOfChairs() && (largeTablesForSmallParties ? true : table.GetNumberOfChairs() - _toEntable.Size() <= 1)) {
+                        table.SeatGuests(_toEntable);
+                        return true;
+                    }
                 }
             }
-            queue.PutInFront(_toEntable);
             _toEntable = null;
+            return false;
+        }
+        private void PlacePartyAtTable() {
+            var seatedTables = from table in tables where table.IsPartySeated(_toEntable) == true
+                               select table;
+            if (seatedTables is null || seatedTables.Count() == 0) {
+                queue.PutInFront(_toEntable);
+                _toEntable = null;
+            } else {
+                Table firstTable = seatedTables.First();
+                GUI.DrawWaiterAtTable(firstTable, this);
+                firstTable.TablesOrder.AssignWaiter(this);
+                PresentTodaysMenu(firstTable, _toEntable);
+                _toEntable = null;
+            }
         }
 
         internal void PresentTodaysMenu(Table table, Party<Customer> party) {
@@ -192,7 +196,7 @@ namespace RestaurangXXLSuperWorld.Persons {
             GUI.DrawWaiterAtTable(_tableToClean, this);
         }
 
-        private bool FinishOrder()
+        private bool CollectPayment()
         {
             foreach (Table table in tables)
             {
@@ -206,6 +210,7 @@ namespace RestaurangXXLSuperWorld.Persons {
                         } else {
                             // Total paid sum                                                    The cost of food ordered
                             CollectedTip += table.GetParty()[i].PayForFood(table.TablesOrder._dishes[i].Price) - table.TablesOrder._dishes[i].Price;
+                            TotalCollectedTip += table.GetParty()[i].PayForFood(table.TablesOrder._dishes[i].Price) - table.TablesOrder._dishes[i].Price;
                         }
                     }
                     tableCleaning = 3;
@@ -217,15 +222,24 @@ namespace RestaurangXXLSuperWorld.Persons {
             }
             return false;
         }
-
-        internal void Update() {
+        private bool isBusy() {
+            return _delivery is not null || _toEntable is not null || tableCleaning > 0;
+        }
+        private void PerformDuties() {
             if (tableCleaning > 0) {
                 CleanTable();
             } else if (_delivery is not null) {
                 DeliverOrderToKitchen(_delivery);
             } else if (_toEntable is not null) {
-                PlacePartyAtTable(anyTableForSmallParties);
-            } else if (FinishOrder()) {
+                PlacePartyAtTable();
+            }
+        }
+
+        internal void Update() {
+            if (isBusy()) {
+                PerformDuties();
+            }
+            else if (CollectPayment()) {
 
             } else if (DeliverOrderToTable()) {
             } else if (TakeOrderFromTable()) {

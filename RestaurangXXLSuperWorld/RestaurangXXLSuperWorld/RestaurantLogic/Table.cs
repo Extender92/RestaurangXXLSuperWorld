@@ -72,6 +72,9 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         internal void UnSeatGuests() {
             seatedGuests = null;
         }
+        internal bool IsPartySeated(Party<Customer> party) {
+            return seatedGuests == party;
+        }
 
         internal void PrintParty()
         {

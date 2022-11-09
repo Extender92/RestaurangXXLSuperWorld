@@ -11,14 +11,14 @@ namespace RestaurangXXLSuperWorld.Food
         // The step in the sequence of cooking
         protected int _currentStep;
         // The description of the sequence of cooking
-        protected string[] _cookingSteps;
+        protected string[]? _cookingSteps;
         // When was the food finished cooking
         protected DateTime? _timeDone = null;
         internal bool IsDone { get; private set; }
         // Represents how good this food turned out
         internal double QualityLevel { get; set; }
         // Long name of the dish
-        internal string Name { get; init; }
+        internal string? Name { get; init; }
         internal int Price { get; init; }
         internal int TimeToCook { get; init; }
         protected FoodItem(string name) {

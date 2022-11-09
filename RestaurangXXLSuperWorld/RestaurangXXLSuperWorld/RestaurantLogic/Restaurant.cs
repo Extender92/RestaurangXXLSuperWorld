@@ -106,7 +106,6 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         }
 
         internal void PrintTableOrders() {
-            int index = 0;
             foreach(Table table in tables) {
                 table.TablesOrder.DebugPrintOrder(0, 60);
             }
