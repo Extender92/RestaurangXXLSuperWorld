@@ -89,13 +89,11 @@ namespace RestaurangXXLSuperWorld.Persons {
         }
         internal bool FindTableForFirstPartyInQueue() {
             Party<Customer>? firstParty;
-            Table? suitableTable;
             firstParty = queue.GetFirstInQueue();
             if (firstParty is not null) {
                 var freeTables = from table in tables where table.IsFree()
                                  select table;
                 foreach (Table table in freeTables) {
-                    //party.Size() <= targetSize && (targetSize - party.Size() <= upperDelta
                     if (firstParty.Size() <= table.GetNumberOfChairs() && table.GetNumberOfChairs() - firstParty.Size() <= 1) {
                         table.SeatGuests(firstParty);
                         GUI.DrawWaiterAtTable(table, this);
