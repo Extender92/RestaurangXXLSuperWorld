@@ -14,13 +14,13 @@ namespace RestaurangXXLSuperWorld.Food
         protected string[] _cookingSteps;
         // When was the food finished cooking
         protected DateTime? _timeDone = null;
-        public bool IsDone { get; private set; }
+        internal bool IsDone { get; private set; }
         // Represents how good this food turned out
-        public double QualityLevel { get; set; }
+        internal double QualityLevel { get; set; }
         // Long name of the dish
-        public string Name { get; init; }
-        public int Price { get; init; }
-        public int TimeToCook { get; init; }
+        internal string Name { get; init; }
+        internal int Price { get; init; }
+        internal int TimeToCook { get; init; }
         protected FoodItem(string name) {
             _currentStep = 0;
             Name = name;
@@ -30,15 +30,15 @@ namespace RestaurangXXLSuperWorld.Food
          * Never touch this piece of shit ctor
          * Goblin engineered in place
          */
-        
-        public FoodItem() 
+
+        internal FoodItem() 
         {
             
         }
         /**
          * Gets the time when this dish was finished cooking
          */
-        public DateTime? TimeDone 
+        internal DateTime? TimeDone 
         { 
             get { if (IsDone && _timeDone != null) { return _timeDone; } return null;} 
             set { _timeDone = value; } 

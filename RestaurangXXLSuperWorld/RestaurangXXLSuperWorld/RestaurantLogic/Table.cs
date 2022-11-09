@@ -28,7 +28,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         protected abstract int SizeY { get; }
 
 
-        private double qualityLevel;
+        internal double qualityLevel;
         // Represents the number of updates since the table was cleaned
         private int _timeSinceCleaned;
         private Party<Customer>? seatedGuests;
@@ -66,6 +66,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         internal void SeatGuests(Party<Customer> party)
         {
             seatedGuests = party;
+            DetermineTableQualityLevel();
         }
 
         internal void PrintParty()
@@ -87,7 +88,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private void DetermineTableQualityLevel() {
             double cleanModifier = 1.2D - 0.05D * _timeSinceCleaned;
             double tableSizeModifier = 1.2D - 0.2 * (GetNumberOfChairs() - seatedGuests.Size());
-            qualityLevel = 10.0D * cleanModifier + tableSizeModifier;
+            qualityLevel = 10.0D * cleanModifier * tableSizeModifier;
         }
         internal List<Customer> GetParty()
         {
