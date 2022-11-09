@@ -11,7 +11,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         private static int _minPartySize = 1;
         private int _partySize;
         private Random _random = new();
-        private T[] _members;
+        internal T[] _members;
         /**
          * Implementation of Interface
          * Returns the Size of the party

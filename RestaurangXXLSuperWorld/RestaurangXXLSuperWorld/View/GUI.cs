@@ -147,14 +147,17 @@ namespace RestaurangXXLSuperWorld.View
                 Console.Write(waiterName);
             }
         }
-        internal static void PrintQueueAtDoor(RestaurantQueue<Party<Customer>> parties)
-        {
-            foreach (Party<Customer> party in parties)
-            {
-                foreach (Party<Customer> members in party)
-                Console.Write(party.FirstName + " " + party.LastName);
-            }
-        }
+        //internal static void PrintQueueAtDoor(RestaurantQueue<Party<Customer>> parties, RestaurantDoor door)
+        //{
+        //    foreach (Party<Customer> party in parties)
+        //    {
+        //        for (int i = 0; i < party.Size(); i++)
+        //        {
+        //            Console.SetCursorPosition(door.positionX + 2 + (12 * i), (door.positionY + i));
+        //            Console.Write(party._members[i].FirstName + " " + party._members[i].LastName);
+        //        }
+        //    }
+        //}
         internal static void PrintKitchenNews(Chef[] chefs)
         {
             string[] currentlyDoing = new string[3];
