@@ -12,8 +12,8 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic
         internal static char[] charSet = { '┌', '─', '┤', '│', '└', '┤' };
         private ConsoleColor Color = ConsoleColor.Magenta;
 
-        private int positionX;
-        private int positionY; 
+        internal int positionX;
+        internal int positionY; 
 
         private int SizeX = 1;
         private int SizeY = 5;

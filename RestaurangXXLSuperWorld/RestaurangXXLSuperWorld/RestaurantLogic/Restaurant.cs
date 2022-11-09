@@ -45,6 +45,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
                 waiter.SetKitchen(kitchen);
                 waiter.SetTables(tables);
                 waiter.SetRestaurantQueue(restaurantQueue);
+                waiter.SetDoor(door);
             }
         }
   
@@ -97,6 +98,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
                 GUI.DrawWaiterAtTable(table, null);
             }
             GUI.DrawWaiterAtKitchen(kitchen, null);
+            GUI.DrawWaiterAtQueue(door, null);
         }
 
         internal void PrintTableOrders() {

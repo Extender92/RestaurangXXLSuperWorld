@@ -15,7 +15,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         private Kitchen? kitchen;
         // Turns cleaning table
         private RestaurantQueue<Party<Customer>>? queue;
-
+        private RestaurantDoor door;
         private int tableCleaning;
         private Table _tableToClean;
         //Reference to the tables the Waiter is Serving
@@ -60,7 +60,10 @@ namespace RestaurangXXLSuperWorld.Persons {
         {
             this.queue = queue;
         }
-
+        internal void SetDoor(RestaurantDoor door)
+        {
+            this.door = door;
+        }
         internal void SetKitchen(Kitchen kitchen) {
             this.kitchen = kitchen;
         }
@@ -70,7 +73,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         internal bool FindPartyForAvailableTable() {
             Table? table = FindEmptyTable();
             Party<Customer>? party;
-
+            
             if (table is not null) {
                 party = GetSuitableParty(table.GetNumberOfChairs());
                 if (party is not null && party.Size() <= table.GetNumberOfChairs()) {
@@ -131,6 +134,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         }
         internal void DeliverOrderToKitchen(IEnumerable <Order> possibleOrders) 
         {
+            GUI.DrawWaiterAtKitchen(kitchen, this);
             Order newOrder = possibleOrders.First();
             kitchen.AddToCookingQueue(newOrder);
             newOrder.UpdateOrder();
@@ -201,11 +205,14 @@ namespace RestaurangXXLSuperWorld.Persons {
             else if (DeliverOrderToTable()) {
               // Try to take new orders
             } else if (TakeOrderFromTable()) {
+
                 // Try to find a table for the first party in queue
             } else if (FindTableForFirstPartyInQueue()) {
+                GUI.DrawWaiterAtQueue(door, this);
                 // // Try to find a any party for table
             } else if (FindPartyForAvailableTable()) {
-              // Idling
+                //GUI.DrawWaiterAtQueue(door, this);
+                // Idling
             } else {
                 GUI.DrawWaiterAtKitchen(kitchen, this);
             }

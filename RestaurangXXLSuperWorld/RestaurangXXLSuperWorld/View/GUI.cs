@@ -109,9 +109,24 @@ namespace RestaurangXXLSuperWorld.View
                 Console.Write("[Servitör: " + waiter.FirstName + "]");
             }            
         }
-        internal static void DrawWaiterAtQueue()
+        internal static void DrawWaiterAtQueue(RestaurantDoor door, Waiter? waiter)
         {
-
+            if (waiter == null)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Console.SetCursorPosition(door.positionX - 21, (door.positionY + 2 + i));
+                    Console.Write(new string(' ', 21));
+                }
+            }
+            else
+            {
+                waitersAtQueue++;
+                string waiterName = "[Servitör: " + waiter.FirstName + "]";
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.SetCursorPosition(door.positionX - waiterName.Length, (door.positionY + 1 + waitersAtQueue));
+                Console.Write(waiterName);
+            }
         }
         internal static void DrawWaiterAtKitchen(Kitchen kitchen, Waiter? waiter)
         {            
