@@ -83,8 +83,8 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
                 table.Update();
             }
             kitchen.Update();
-            GUI.PrintKitchenNews(kitchen.chefs);
-            GUI.PrintWaitresNews(waiters);
+            //GUI.PrintKitchenNews(kitchen.chefs);
+            //GUI.PrintWaitresNews(waiters);
             GUI.PrintQueueAtDoor(restaurantQueue, door);
         }
 

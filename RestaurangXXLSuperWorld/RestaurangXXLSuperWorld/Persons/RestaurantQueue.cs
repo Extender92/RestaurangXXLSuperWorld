@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -82,6 +83,15 @@ namespace RestaurangXXLSuperWorld.Persons {
                 return;
             }
             _groups.Insert(0,item);
+        }
+        public ImmutableList<T> Peek(int n) {
+            T[] partyArray = new T[n];
+            for(int i = 0; i < n; i++) {
+                if(_groups is not null && _groups.Count > 0) {
+                    partyArray[i] = _groups[i];
+                }
+            }
+            return partyArray.ToImmutableList<T>();
         }
     }
 }

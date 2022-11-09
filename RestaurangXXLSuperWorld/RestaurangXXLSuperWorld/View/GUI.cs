@@ -2,6 +2,8 @@
 using RestaurangXXLSuperWorld.RestaurantLogic;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -147,17 +149,16 @@ namespace RestaurangXXLSuperWorld.View
                 Console.Write(waiterName);
             }
         }
-        //internal static void PrintQueueAtDoor(RestaurantQueue<Party<Customer>> parties, RestaurantDoor door)
-        //{
-        //    foreach (Party<Customer> party in parties)
-        //    {
-        //        for (int i = 0; i < party.Size(); i++)
-        //        {
-        //            Console.SetCursorPosition(door.positionX + 2 + (12 * i), (door.positionY + i));
-        //            Console.Write(party._members[i].FirstName + " " + party._members[i].LastName);
-        //        }
-        //    }
-        //}
+        internal static void PrintQueueAtDoor(RestaurantQueue<Party<Customer>> queue, RestaurantDoor door) {
+            ImmutableList<Party<Customer>> parties = queue.Peek(1);
+            foreach (Party<Customer> party in parties) {
+                for (int i = 0; i < party.Size(); i++) {
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.SetCursorPosition(door.positionX + 2 + 12, (door.positionY + i));
+                    Console.Write(party._members[i].FirstName + " " + party._members[i].LastName);
+                }
+            }
+        }
         internal static void PrintKitchenNews(Chef[] chefs)
         {
             string[] currentlyDoing = new string[3];
@@ -172,7 +173,7 @@ namespace RestaurangXXLSuperWorld.View
             string[] currentlyDoing = new string[3];
             for (int i = 0; i < 3; i++)
             {
-                currentlyDoing[i] = waiters[i].doing;
+        //        currentlyDoing[i] = waiters[i].doing;
             }
             DrawNews("Waiter News", 50, 15, currentlyDoing);
         }

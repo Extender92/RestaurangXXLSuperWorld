@@ -98,7 +98,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
             var deliveries = from delivery in deliveryList
                              where delivery.SingleWaiter == waiter
                              select delivery;
-            if (deliveries == null || deliveries.Count() == 0)
+            if (deliveries is null || deliveries.Count() == 0)
                 return null;
             var temp = deliveries.First();
             deliveryList.Remove(deliveries.First());
