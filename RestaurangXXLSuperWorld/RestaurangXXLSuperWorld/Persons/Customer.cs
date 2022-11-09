@@ -45,14 +45,17 @@ namespace RestaurangXXLSuperWorld.Persons {
             return GetRandomDish(menu);
         }
 
-        private bool CanAfford(FoodItem item) {
+        internal bool CanAfford(FoodItem item) {
             return item.Price < this.Money;
         }
 
         internal int PayForFood(int sum)
         {
-            if (Money < sum)
-                return Money;
+            if (Money < sum) {
+                int temp = Money;
+                Money = 0;
+                return temp;
+            }
             int ret = sum + GetTipAmount(Money - sum);
             Money -= ret;
             return ret;

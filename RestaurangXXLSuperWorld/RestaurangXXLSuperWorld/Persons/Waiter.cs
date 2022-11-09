@@ -17,6 +17,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         private RestaurantQueue<Party<Customer>>? queue;
 
         private int tableCleaning;
+        private Table _tableToClean;
         //Reference to the tables the Waiter is Serving
         private List<Table>? tables; 
         // Individual service quality representing the charisma and mood of the waiter 
@@ -82,7 +83,6 @@ namespace RestaurangXXLSuperWorld.Persons {
 
             } 
             else {
-                GUI.DrawWaiterAtKitchen(kitchen, this);
                 return false;
             }
             return true;
@@ -122,7 +122,7 @@ namespace RestaurangXXLSuperWorld.Persons {
             var possibleOrders = from table in tables
                                  where table.TablesOrder.SingleWaiter == this && table.TablesOrder.Step == OrderSteps.ToBeOrdered
                                  select table.TablesOrder;
-            if (possibleOrders != null && possibleOrders.Count() > 0)
+            if (possibleOrders is not null && possibleOrders.Count() > 0)
             {
                 DeliverOrderToKitchen(possibleOrders);
                 return true;
@@ -140,7 +140,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         internal bool DeliverOrderToTable()
         {
             Order? delivery = kitchen.TakeFromDeliveryList(this);
-            if (delivery == null) 
+            if (delivery is null) 
                 return false;
             delivery.UpdateOrder();
             delivery.DeliverOrder();
@@ -150,26 +150,36 @@ namespace RestaurangXXLSuperWorld.Persons {
 
         internal void CleanTable() 
         {
-
+            tableCleaning--;
+            if (tableCleaning == 0) {
+                _tableToClean._timeSinceCleaned = 0;
+                _tableToClean.UnSeatGuests();
+                GUI.DrawWaiterAtKitchen(kitchen, this);
+                return;
+            }
+            GUI.DrawWaiterAtTable(_tableToClean, this);
         }
 
         private bool FinnishOrder()
         {
             foreach (Table table in tables)
             {
-                if (table.TablesOrder.Step == OrderSteps.Finished)
+                if (table.TablesOrder.Step == OrderSteps.Finished && table.TablesOrder.SingleWaiter == this)
                 {
                     for (int i = 0; i < table.TablesOrder._dishes.Count; i++)
                     {
-                        table.TablesOrder.PaidSum += table.GetParty()[i].PayForFood(table.TablesOrder._dishes[i].Price);
-
+                        if (!table.GetParty()[i].CanAfford(table.TablesOrder._dishes[i])) {
+                            table.GetParty()[i].PayForFood(table.TablesOrder._dishes[i].Price);
+                            //Set in slave service
+                        } else {
+                            // Total paid sum                                                    The cost of food ordered
+                            CollectedTip += table.GetParty()[i].PayForFood(table.TablesOrder._dishes[i].Price) - table.TablesOrder._dishes[i].Price;
+                        }
                     }
-
-
-
-
                     tableCleaning = 3;
+                    _tableToClean = table;
                     table.TablesOrder.ResetOrder();
+                    GUI.DrawWaiterAtTable(table, this);
                     return true;
                 }
             }
@@ -178,8 +188,11 @@ namespace RestaurangXXLSuperWorld.Persons {
 
         internal void Update() {
               // See if currently working (ie tablecleaning)
-            if ()
+            if (tableCleaning > 0)
             {
+                CleanTable();
+            }
+            else if (FinnishOrder()) {
 
             }
               // If available for work
@@ -188,12 +201,13 @@ namespace RestaurangXXLSuperWorld.Persons {
             else if (DeliverOrderToTable()) {
               // Try to take new orders
             } else if (TakeOrderFromTable()) {
-              // Try to find a table for the first party in queue
+                // Try to find a table for the first party in queue
             } else if (FindTableForFirstPartyInQueue()) {
-             // Try to find a any party for table
-            } 
-            else if (FindPartyForAvailableTable()) {
+                // // Try to find a any party for table
+            } else if (FindPartyForAvailableTable()) {
               // Idling
+            } else {
+                GUI.DrawWaiterAtKitchen(kitchen, this);
             }
         }
     }

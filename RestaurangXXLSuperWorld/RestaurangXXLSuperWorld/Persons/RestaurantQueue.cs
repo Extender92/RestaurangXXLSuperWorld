@@ -51,6 +51,9 @@ namespace RestaurangXXLSuperWorld.Persons {
          * "We can solve any problem by introducing an extra level of indirection."
          */
         public T GetFirstInQueue() {
+            if(_groups.Count == 0) {
+                FillQueue(20);
+            }
             T firstParty = _groups.First();
             _groups.Remove(firstParty);
             return firstParty;

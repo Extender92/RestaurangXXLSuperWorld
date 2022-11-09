@@ -2,6 +2,7 @@
 using RestaurangXXLSuperWorld.View;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -30,7 +31,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
 
         internal double qualityLevel;
         // Represents the number of updates since the table was cleaned
-        private int _timeSinceCleaned;
+        internal int _timeSinceCleaned;
         private Party<Customer>? seatedGuests;
 
         internal Order TablesOrder { get; set; }
@@ -59,7 +60,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
 
         internal bool IsFree()
         {
-            if (seatedGuests == null) return true;
+            if (seatedGuests is null) return true;
             return false;
         }
 
@@ -67,6 +68,9 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         {
             seatedGuests = party;
             DetermineTableQualityLevel();
+        }
+        internal void UnSeatGuests() {
+            seatedGuests = null;
         }
 
         internal void PrintParty()
@@ -78,9 +82,9 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         }
         internal void Update() {
             _timeSinceCleaned++;
-            if(TablesOrder.Step == OrderSteps.Delivered && TablesOrder.TimeElapsed() > eatingTime) {
+            if(TablesOrder.Step == OrderSteps.Delivered && TablesOrder.TimeElapsed() < eatingTime) {
                 //Eating Food
-            } else if (TablesOrder.TimeElapsed() > eatingTime) {
+            } else if (TablesOrder.Step == OrderSteps.Delivered && TablesOrder.TimeElapsed() > eatingTime) {
                 TablesOrder.UpdateOrder();
             }
         }
@@ -94,6 +98,6 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         {
             return seatedGuests.getParty().ToList();
         }
-    
+
     }
 }

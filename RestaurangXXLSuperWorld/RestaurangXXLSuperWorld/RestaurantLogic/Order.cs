@@ -96,9 +96,9 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
 
         internal double TimeElapsed() {
             if(_timeOrdered != null && _timeDelivered != null) {
-                return (_timeDelivered - _timeOrdered).Value.TotalSeconds;
+                return (DateTime.Now - _timeDelivered).Value.TotalSeconds;
             } else {
-                return 99999;
+                return 0;
             }
         }
     }
