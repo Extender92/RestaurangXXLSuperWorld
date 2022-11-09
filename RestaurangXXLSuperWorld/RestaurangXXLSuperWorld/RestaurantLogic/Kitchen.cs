@@ -23,7 +23,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private List<Customer> slaveCustomer = new List<Customer>();
         private List<Customer> masterCustomer = new List<Customer>();
 
-        private List<Person> chefs = new List<Person>();
+        internal List<Person> chefs = new List<Person>();
 
         private List<Order> currentlyCooking = new List<Order>();
 
@@ -59,15 +59,11 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
                     currentlyCooking.Add(newOrder);
                     chef.currentlyCooking = newOrder;
                     chef.isIdle = false;
+                } 
+                else {
+                    chef.Cook();
                 }
             }
-
-            foreach (Chef chef in chefs)
-            {
-                if (!chef.isIdle)
-                chef.Cooking();              
-            }
-           
             var cooking = currentlyCooking;
             for (int i = 0; i < cooking.Count; i++)
             {

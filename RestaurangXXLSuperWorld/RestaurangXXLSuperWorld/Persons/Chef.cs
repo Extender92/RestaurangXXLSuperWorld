@@ -13,6 +13,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         internal Order? currentlyCooking;
         private List<string> specialities = new();
         private Menu menu = new();
+        internal string doing = "idle";
 
         internal bool isIdle;
 
@@ -55,11 +56,13 @@ namespace RestaurangXXLSuperWorld.Persons {
             SetSpecialityFoodQuality();
         }
 
-        internal void Cooking()
+        internal void Cook()
         {
+            if(currentlyCooking is null) { 
+                return; 
+            }
             foreach (FoodItem dish in currentlyCooking._dishes)
                 dish.Cook();
-
             if (currentlyCooking._dishes[0].IsDone)
             {
                 SetFoodQualityLevel();

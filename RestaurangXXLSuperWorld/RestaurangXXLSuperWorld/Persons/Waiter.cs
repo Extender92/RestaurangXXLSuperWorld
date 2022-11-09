@@ -18,6 +18,8 @@ namespace RestaurangXXLSuperWorld.Persons {
         private RestaurantDoor door;
         private int tableCleaning;
         private Table _tableToClean;
+        private Order? _delivery;
+        private Party<Customer>? _toEntable;
         //Reference to the tables the Waiter is Serving
         private List<Table>? tables; 
         // Individual service quality representing the charisma and mood of the waiter 
@@ -53,6 +55,7 @@ namespace RestaurangXXLSuperWorld.Persons {
 
         public Waiter()
         {
+            _delivery = null;
             SetQuality();
         }
 
@@ -99,7 +102,8 @@ namespace RestaurangXXLSuperWorld.Persons {
                 foreach (Table table in freeTables) {
                     if (firstParty.Size() <= table.GetNumberOfChairs() && table.GetNumberOfChairs() - firstParty.Size() <= 1) {
                         table.SeatGuests(firstParty);
-                        GUI.DrawWaiterAtTable(table, this);
+                        //GUI.DrawWaiterAtTable(table, this);
+                        table.TablesOrder.AssignWaiter(this);
                         PresentTodaysMenu(table, firstParty);
                         return true;
                     }
@@ -107,6 +111,31 @@ namespace RestaurangXXLSuperWorld.Persons {
             }
             queue.PutInFront(firstParty);
             return false;
+        }
+        private bool GetFirstPartyInQueue() {
+            Party<Customer>? firstParty;
+            firstParty = queue.GetFirstInQueue();
+            if (firstParty is not null) {
+                _toEntable = firstParty;
+                return true;
+            }
+            return false;
+        }
+        private void PlacePartyAtTable() {
+            var freeTables = from table in tables where table.IsFree()
+                             select table;
+            foreach (Table table in freeTables) {
+                if (_toEntable.Size() <= table.GetNumberOfChairs() && table.GetNumberOfChairs() - _toEntable.Size() <= 1) {
+                    table.SeatGuests(_toEntable);
+                    GUI.DrawWaiterAtTable(table, this);
+                    table.TablesOrder.AssignWaiter(this);
+                    PresentTodaysMenu(table, _toEntable);
+                    _toEntable = null;
+                    return;
+                }
+            }
+            queue.PutInFront(_toEntable);
+            _toEntable = null;
         }
 
         internal void PresentTodaysMenu(Table table, Party<Customer> party) {
@@ -117,7 +146,6 @@ namespace RestaurangXXLSuperWorld.Persons {
             }
             table.TablesOrder.OrderFood(orderDishes);
             table.TablesOrder.UpdateOrder();
-            table.TablesOrder.AssignWaiter(this);
             table.TablesOrder.StartOrder();
         }
         internal bool TakeOrderFromTable() 
@@ -127,18 +155,18 @@ namespace RestaurangXXLSuperWorld.Persons {
                                  select table.TablesOrder;
             if (possibleOrders is not null && possibleOrders.Count() > 0)
             {
-                DeliverOrderToKitchen(possibleOrders);
+                _delivery = possibleOrders.First();
+                GUI.DrawWaiterAtTable(_delivery.Target, this);
                 return true;
             }
             return false;
         }
-        internal void DeliverOrderToKitchen(IEnumerable <Order> possibleOrders) 
+        internal void DeliverOrderToKitchen(Order order) 
         {
             GUI.DrawWaiterAtKitchen(kitchen, this);
-            Order newOrder = possibleOrders.First();
-            kitchen.AddToCookingQueue(newOrder);
-            newOrder.UpdateOrder();
-            //newOrder.DebugPrintOrder(0 , 0);
+            kitchen.AddToCookingQueue(order);
+            order.UpdateOrder();
+            _delivery = null;
         }
 
         internal bool DeliverOrderToTable()
@@ -191,28 +219,20 @@ namespace RestaurangXXLSuperWorld.Persons {
         }
 
         internal void Update() {
-              // See if currently working (ie tablecleaning)
-            if (tableCleaning > 0)
-            {
+            // See if currently working (ie tablecleaning)
+            if (tableCleaning > 0) {
                 CleanTable();
-            }
-            else if (FinnishOrder()) {
+            } else if (_delivery is not null) {
+                DeliverOrderToKitchen(_delivery);
+            } else if (_toEntable is not null) {
+                PlacePartyAtTable();
+            } else if (FinnishOrder()) {
 
-            }
-              // If available for work
-
-              // See if any cooked order can be delivered to customer
-            else if (DeliverOrderToTable()) {
-              // Try to take new orders
+            } else if (DeliverOrderToTable()) {
             } else if (TakeOrderFromTable()) {
 
-                // Try to find a table for the first party in queue
-            } else if (FindTableForFirstPartyInQueue()) {
+            } else if (GetFirstPartyInQueue()) {
                 GUI.DrawWaiterAtQueue(door, this);
-                // // Try to find a any party for table
-            } else if (FindPartyForAvailableTable()) {
-                //GUI.DrawWaiterAtQueue(door, this);
-                // Idling
             } else {
                 GUI.DrawWaiterAtKitchen(kitchen, this);
             }
