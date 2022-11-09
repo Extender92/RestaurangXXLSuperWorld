@@ -51,19 +51,6 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
 
         private void CookingActivities()
         {
-            foreach (Chef chef in chefs)
-            {
-                if (chef.isIdle && (cookingQueue != null) && (cookingQueue.Any()))
-                {
-                    Order newOrder = cookingQueue.Dequeue();
-                    currentlyCooking.Add(newOrder);
-                    chef.currentlyCooking = newOrder;
-                    chef.isIdle = false;
-                } 
-                else {
-                    chef.Cook();
-                }
-            }
             var cooking = currentlyCooking;
             for (int i = 0; i < cooking.Count; i++)
             {
@@ -74,6 +61,17 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
                 }
             }
             currentlyCooking = cooking;
+
+            foreach (Chef chef in chefs) {
+                if (chef.isIdle && (cookingQueue != null) && (cookingQueue.Any())) {
+                    Order newOrder = cookingQueue.Dequeue();
+                    currentlyCooking.Add(newOrder);
+                    chef.currentlyCooking = newOrder;
+                    chef.isIdle = false;
+                } else {
+                    chef.Cook();
+                }
+            }
         }
 
         private string KitchenActivities()
