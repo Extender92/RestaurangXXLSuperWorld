@@ -14,6 +14,8 @@ namespace RestaurangXXLSuperWorld {
             restaurant.PopulateWaiters();
             SimpleTimer timer = new SimpleTimer(FrameTime);
             Console.CursorVisible = false;
+            Console.SetBufferSize(300,300);
+            Console.SetWindowSize(Console.LargestWindowWidth,Console.LargestWindowHeight);
             while (true) {
                 restaurant.Update();
                 Thread.Sleep(FrameTime - timer.ElapsedMillisecs());

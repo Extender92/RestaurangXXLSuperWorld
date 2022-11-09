@@ -79,7 +79,7 @@ namespace RestaurangXXLSuperWorld.Persons {
             return GetFirstInQueue();
         }
         public void PutInFront(T item) {
-            if (item == null) {
+            if (item is null) {
                 return;
             }
             _groups.Insert(0,item);
@@ -87,11 +87,15 @@ namespace RestaurangXXLSuperWorld.Persons {
         public ImmutableList<T> Peek(int n) {
             T[] partyArray = new T[n];
             for(int i = 0; i < n; i++) {
-                if(_groups is not null && _groups.Count > 0) {
+                if(_groups is not null && _groups.Count > i) {
                     partyArray[i] = _groups[i];
                 }
             }
             return partyArray.ToImmutableList<T>();
+        }
+
+        internal int Count() {
+            return _groups.Count;
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace RestaurangXXLSuperWorld.Persons {
     internal class Waiter : Person {
+        private readonly bool anyTableForSmallParties = true;
         // Reference to Kitchen the Waiter is Delivering to
         private Kitchen? kitchen;
         // Turns cleaning table
@@ -93,23 +94,21 @@ namespace RestaurangXXLSuperWorld.Persons {
             }
             return true;
         }
-        internal bool FindTableForFirstPartyInQueue() {
-            Party<Customer>? firstParty;
-            firstParty = queue.GetFirstInQueue();
-            if (firstParty is not null) {
+        internal bool CanFindTableForFirstParty(bool largeTablesForSmallParties = false) {
+            var firstParty = queue.Peek(1);
+            if (firstParty is not null && firstParty.First() is not null) {
                 var freeTables = from table in tables where table.IsFree()
                                  select table;
                 foreach (Table table in freeTables) {
-                    if (firstParty.Size() <= table.GetNumberOfChairs() && table.GetNumberOfChairs() - firstParty.Size() <= 1) {
-                        table.SeatGuests(firstParty);
-                        //GUI.DrawWaiterAtTable(table, this);
-                        table.TablesOrder.AssignWaiter(this);
-                        PresentTodaysMenu(table, firstParty);
+                    if(largeTablesForSmallParties == true) {
+                        if (firstParty.First().Size() <= table.GetNumberOfChairs()) {
+                            return true;
+                        }
+                    } else if (firstParty.First().Size() <= table.GetNumberOfChairs() && table.GetNumberOfChairs() - firstParty.First().Size() <= 1) {
                         return true;
                     }
                 }
             }
-            queue.PutInFront(firstParty);
             return false;
         }
         private bool GetFirstPartyInQueue() {
@@ -121,11 +120,11 @@ namespace RestaurangXXLSuperWorld.Persons {
             }
             return false;
         }
-        private void PlacePartyAtTable() {
+        private void PlacePartyAtTable(bool largeTablesForSmallParties = false) {
             var freeTables = from table in tables where table.IsFree()
                              select table;
             foreach (Table table in freeTables) {
-                if (_toEntable.Size() <= table.GetNumberOfChairs() && table.GetNumberOfChairs() - _toEntable.Size() <= 1) {
+                if (_toEntable.Size() <= table.GetNumberOfChairs() && (largeTablesForSmallParties ? true : table.GetNumberOfChairs() - _toEntable.Size() <= 1)) {
                     table.SeatGuests(_toEntable);
                     GUI.DrawWaiterAtTable(table, this);
                     table.TablesOrder.AssignWaiter(this);
@@ -186,13 +185,14 @@ namespace RestaurangXXLSuperWorld.Persons {
             if (tableCleaning == 0) {
                 _tableToClean._timeSinceCleaned = 0;
                 _tableToClean.UnSeatGuests();
+                Restaurant.completedOrders++;
                 GUI.DrawWaiterAtKitchen(kitchen, this);
                 return;
             }
             GUI.DrawWaiterAtTable(_tableToClean, this);
         }
 
-        private bool FinnishOrder()
+        private bool FinishOrder()
         {
             foreach (Table table in tables)
             {
@@ -219,21 +219,25 @@ namespace RestaurangXXLSuperWorld.Persons {
         }
 
         internal void Update() {
-            // See if currently working (ie tablecleaning)
             if (tableCleaning > 0) {
                 CleanTable();
             } else if (_delivery is not null) {
                 DeliverOrderToKitchen(_delivery);
             } else if (_toEntable is not null) {
-                PlacePartyAtTable();
-            } else if (FinnishOrder()) {
+                PlacePartyAtTable(anyTableForSmallParties);
+            } else if (FinishOrder()) {
 
             } else if (DeliverOrderToTable()) {
             } else if (TakeOrderFromTable()) {
 
-            } else if (GetFirstPartyInQueue()) {
+            } else if (CanFindTableForFirstParty()) {
+                GetFirstPartyInQueue();
                 GUI.DrawWaiterAtQueue(door, this);
-            } else {
+            } else if (anyTableForSmallParties == true && CanFindTableForFirstParty(true)) {
+                GetFirstPartyInQueue();
+                GUI.DrawWaiterAtQueue(door, this);
+            } 
+            else {
                 GUI.DrawWaiterAtKitchen(kitchen, this);
             }
         }

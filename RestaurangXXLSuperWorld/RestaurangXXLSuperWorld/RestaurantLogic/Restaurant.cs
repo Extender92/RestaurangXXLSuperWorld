@@ -23,7 +23,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private List<Person> waiters = new();
         private List<Table> tables = new();
         private RestaurantQueue<Party<Customer>> restaurantQueue = RestaurantQueue<Party<Customer>>.InitializeQueue(dailyCustomers);
-        private int completedOrders;
+        internal static int completedOrders;
         private Kitchen kitchen;
         private RestaurantDoor door;
 
@@ -102,6 +102,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
             }
             GUI.DrawWaiterAtKitchen(kitchen, null);
             GUI.DrawWaiterAtQueue(door, null);
+            GUI.PrintQueueAtDoor(null, door);
         }
 
         internal void PrintTableOrders() {

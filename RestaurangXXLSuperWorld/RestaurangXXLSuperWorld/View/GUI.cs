@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -149,13 +150,23 @@ namespace RestaurangXXLSuperWorld.View
                 Console.Write(waiterName);
             }
         }
-        internal static void PrintQueueAtDoor(RestaurantQueue<Party<Customer>> queue, RestaurantDoor door) {
-            ImmutableList<Party<Customer>> parties = queue.Peek(1);
-            foreach (Party<Customer> party in parties) {
-                for (int i = 0; i < party.Size(); i++) {
+        internal static void PrintQueueAtDoor(RestaurantQueue<Party<Customer>>? queue, RestaurantDoor door) {
+            if (queue is null) {
+                for (int i = 0; i < 4; i++) {
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.SetCursorPosition(door.positionX + 2 + 12, (door.positionY + i));
-                    Console.Write(party._members[i].FirstName + " " + party._members[i].LastName);
+                    Console.SetCursorPosition(door.positionX + 4, (door.positionY + i));
+                    Console.Write(new String(' ', 120));
+                }
+            } else {
+                ImmutableList<Party<Customer>> parties = queue.Peek(Math.Min(4, queue.Count()));
+                int xOffsets = 0;
+                foreach (Party<Customer> party in parties) {
+                    for (int i = 0; i < party.Size(); i++) {
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.SetCursorPosition(door.positionX + 4 + 21*xOffsets, (door.positionY + i));
+                        Console.Write(party._members[i].FirstName + " " + party._members[i].LastName);
+                    }
+                    xOffsets++;
                 }
             }
         }
