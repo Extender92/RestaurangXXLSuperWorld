@@ -3,6 +3,7 @@ using RestaurangXXLSuperWorld.RestaurantLogic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,18 +15,24 @@ namespace RestaurangXXLSuperWorld.Persons {
         public Customer() {
             Random random = new Random();
             Money = random.Next(120, 361);
+            Satisfaction = 100D;
         }
+
         private void FillWallet(int amount = 250) {
             Money += amount;
         }
-        internal void ModifySatisfaction(double foodQuality, double tableQuality, double serviceQuality) {
-            Satisfaction -= 1;
-        }
-        internal int GetTipAmount() {
-            double modifier = 1.0D;
 
-            return 0;
+        internal void ModifySatisfaction(double foodQuality, double tableQuality, double serviceQuality) 
+        {
+            Satisfaction *= (foodQuality / 100) * (tableQuality / 10) * (serviceQuality / 100);
         }
+
+        internal int GetTipAmount(int moneyLeft) 
+        {
+            double tip = moneyLeft * (Satisfaction / 100);
+            return ((int)tip);
+        }
+
         internal FoodItem GetDishToOrder(Menu menu) {
             Random random = new Random();
             FoodItem[] items = menu.GetSuitableDishes().ToArray();
@@ -42,9 +49,19 @@ namespace RestaurangXXLSuperWorld.Persons {
             return item.Price < this.Money;
         }
 
+        internal int PayForFood(int sum)
+        {
+            if (Money < sum)
+                return Money;
+            int ret = sum + GetTipAmount(Money - sum);
+            Money -= ret;
+            return ret;
+        }
+
         private bool DishStrikesFancy(FoodItem item) {
             return (item.Price * 1.2) < (this.Money);
         }
+
         private FoodItem GetRandomDish(Menu menu) {
             Random random = new Random();
             FoodItem[] items = menu.GetSuitableDishes().ToArray();

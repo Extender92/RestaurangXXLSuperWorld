@@ -20,6 +20,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private DateTime? _timeDelivered;
         private DateTime? _timeOrdered;
         internal List<FoodItem> _dishes = new();
+        private double serviceQuality;
         private int _totalSum;
         internal int PaidSum { get; set; }
         internal Table Target { get; private set; }
@@ -29,9 +30,11 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
             Target = target;
             Step = OrderSteps.Initial;
         }
+
         internal void UpdateOrder() {
             Step++;
         }
+
         internal string GetStatus() {
             return Step.ToString();
         }
@@ -48,21 +51,40 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
                 }
             }
         }
+
         public void AssignWaiter(Waiter servant) {
             SingleWaiter = servant;
         } 
+
         public void OrderFood(IEnumerable<FoodItem> toOrder) {
             foreach(FoodItem order in toOrder) {
                 _dishes.Add(order);
             }
         }
+
         internal void StartOrder() {
             _timeOrdered = DateTime.Now;
         }
+
         internal void DeliverOrder() {
             _timeDelivered = DateTime.Now;
+
+            if ((_timeDelivered - _timeOrdered).Value.TotalSeconds <= 16)
+                serviceQuality = SingleWaiter.ServiceQuality;
+
+            else
+                serviceQuality = SingleWaiter.ServiceQuality * 0.8;
         }
-        public void ResetOrder() {
+
+        private void SetCustomerSatisfaction()
+        {
+            for (int i = 0; i < _dishes.Count; i++)
+            {
+                Target.GetParty()[i].ModifySatisfaction(_dishes[i].QualityLevel, Target.qualityLevel, serviceQuality);
+            }
+        }
+
+        internal void ResetOrder() {
             _timeOrdered = null;
             _timeDelivered = null;
             _totalSum = 0;

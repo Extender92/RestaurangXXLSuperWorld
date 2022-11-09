@@ -20,7 +20,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         //Reference to the tables the Waiter is Serving
         private List<Table>? tables; 
         // Individual service quality representing the charisma and mood of the waiter 
-        private double ServiceQuality;
+        internal double ServiceQuality;
         private int CollectedTip { get; set; }
         internal static int TotalCollectedTip { get; }
 
@@ -152,13 +152,40 @@ namespace RestaurangXXLSuperWorld.Persons {
         {
 
         }
-        internal void Update() {
-            // See if currently working (ie tablecleaning)
 
-            // If available for work
+        private bool FinnishOrder()
+        {
+            foreach (Table table in tables)
+            {
+                if (table.TablesOrder.Step == OrderSteps.Finished)
+                {
+                    for (int i = 0; i < table.TablesOrder._dishes.Count; i++)
+                    {
+                        table.TablesOrder.PaidSum += table.GetParty()[i].PayForFood(table.TablesOrder._dishes[i].Price);
+
+                    }
+
+
+
+
+                    tableCleaning = 3;
+                    table.TablesOrder.ResetOrder();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        internal void Update() {
+              // See if currently working (ie tablecleaning)
+            if ()
+            {
+
+            }
+              // If available for work
 
               // See if any cooked order can be delivered to customer
-            if (DeliverOrderToTable()) {
+            else if (DeliverOrderToTable()) {
               // Try to take new orders
             } else if (TakeOrderFromTable()) {
               // Try to find a table for the first party in queue
@@ -168,25 +195,6 @@ namespace RestaurangXXLSuperWorld.Persons {
             else if (FindPartyForAvailableTable()) {
               // Idling
             }
-
-            // See if any table wants to order food
-
-            // See if any Party wants to leave (clean table and collect tip)
-
-            // See if any Table can have guests
-            //if (!FindPartyForAvailableTable())
-            //{
-            //    TakeOrderFromTable();                
-            //}
-            
-            
-            //DeliverOrderToTable();
-            
-            
-
-            // If can have guest, fetch a party fitting the slot
-
-            // If cannot Work, Idle
         }
     }
 }
