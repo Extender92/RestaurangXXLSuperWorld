@@ -147,6 +147,74 @@ namespace RestaurangXXLSuperWorld.View
                 Console.Write(waiterName);
             }
         }
+        //internal static void PrintQueueAtDoor(RestaurantQueue<Party<Customer>> parties, RestaurantDoor door)
+        //{
+        //    foreach (Party<Customer> party in parties)
+        //    {
+        //        for (int i = 0; i < party.Size(); i++)
+        //        {
+        //            Console.SetCursorPosition(door.positionX + 2 + (12 * i), (door.positionY + i));
+        //            Console.Write(party._members[i].FirstName + " " + party._members[i].LastName);
+        //        }
+        //    }
+        //}
+        internal static void PrintKitchenNews(Chef[] chefs)
+        {
+            string[] currentlyDoing = new string[3];
+            for (int i = 0; i < 3; i++)
+            {
+                currentlyDoing[i] = chefs[i].doing;
+            }
+            DrawNews("Kitchen News", 50, 5, currentlyDoing);
+        }
+        internal static void PrintWaitresNews(Waiter[] waiters)
+        {
+            string[] currentlyDoing = new string[3];
+            for (int i = 0; i < 3; i++)
+            {
+                currentlyDoing[i] = waiters[i].doing;
+            }
+            DrawNews("Waiter News", 50, 15, currentlyDoing);
+        }
+        private static void DrawNews(string header, int fromLeft, int fromTop, string[] graphics)
+        {
+
+            int width = 0;
+            for (int i = 0; i < graphics.Length; i++)
+            {
+                if (graphics[i].Length > width)
+                {
+                    width = graphics[i].Length;
+                }
+            }
+            if (width < header.Length + 4)
+            { width = header.Length + 4; };
+
+            Console.SetCursorPosition(fromLeft, fromTop);
+            if (header != "")
+            {
+                Console.Write('┌' + " ");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.Write(header);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(" " + new String('─', width - header.Length) + '┐');
+            }
+            else
+            {
+                Console.Write('┌' + new String('─', width + 2) + '┐');
+            }
+            Console.WriteLine();
+            int maxRows = 0;
+            for (int j = 0; j < graphics.Length; j++)
+            {
+                Console.SetCursorPosition(fromLeft, fromTop + j + 1);
+                Console.WriteLine('│' + " " + graphics[j] + new String(' ', width - graphics[j].Length + 1) + '│');
+                maxRows = j;
+            }
+            Console.SetCursorPosition(fromLeft, fromTop + maxRows + 2);
+            Console.Write('└' + new String('─', width + 2) + '┘');
+
+        }
         internal static void ResetStatics()
         {
             waitersAtKitchen = 0;
