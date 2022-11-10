@@ -197,7 +197,7 @@ namespace RestaurangXXLSuperWorld.View
 
         internal static void PrintRestuarantInfo()
         {
-            string[] news = new string[]{ $"Antal besökare just nu: {restaurant.GetNumberOfVisitors}", $"Totalt antal besökare: {restaurant.GetTotalNumberOfVisitorsCompleted}", $"Total dricks: {restaurant.GetTotalTip}", $"Medel på kundnöjdhet: {restaurant}" };
+            string[] news = new string[]{ $"Antal besökare just nu: {restaurant.GetNumberOfVisitors()}", $"Totalt antal besökare: {restaurant.GetNumberOfVisitors() + restaurant.GetTotalNumberOfVisitorsCompleted()}", $"Total dricks: {restaurant.GetTotalTip()}", $"Medel på kundnöjdhet: {restaurant.GetAverageSatisfaction()}" };
 
             DrawNews("Restaurang Info", 85, 1, news);
         } 
