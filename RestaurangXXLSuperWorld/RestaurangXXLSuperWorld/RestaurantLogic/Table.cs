@@ -32,7 +32,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         internal double qualityLevel;
         // Represents the number of updates since the table was cleaned
         internal int _timeSinceCleaned;
-        private Party<Customer>? seatedGuests;
+        internal Party<Customer>? seatedGuests;
 
         internal Order TablesOrder { get; set; }
 

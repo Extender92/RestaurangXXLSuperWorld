@@ -20,10 +20,10 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
 
         private static int dailyCustomers = 80;
 
-        private List<Person> waiters = new();
+        private List<Waiter> waiters = new();
         private List<Table> tables = new();
         private RestaurantQueue<Party<Customer>> restaurantQueue = RestaurantQueue<Party<Customer>>.InitializeQueue(dailyCustomers);
-        internal static int completedOrders;
+        internal static int ServedVisitors;
         private Kitchen kitchen;
         private RestaurantDoor door;
 
@@ -108,6 +108,28 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
             foreach(Table table in tables) {
                 table.TablesOrder.DebugPrintOrder(0, 60);
             }
+        }
+        internal int GetNumberOfVisitors() {
+            int visitors = 0;
+            foreach (Table table in tables) {
+                if (!table.IsFree()) {
+                    visitors += table.seatedGuests.Size();
+                }
+            }
+            return visitors;
+        }
+        internal int GetTotalNumberOfVisitorsCompleted() {
+            return ServedVisitors;
+        }
+        internal int GetTotalTip() {
+            return Waiter.TotalCollectedTip;
+        }
+        internal (string, int)[] GetTipForEachWaiter() {
+            (string, int)[] values = new (string, int)[waiters.Count];
+            for (int i = 0; i < waiters.Count; i++) {
+                values[i] = (waiters[i].FirstName, waiters[i].CollectedTip);
+            }
+            return values;
         }
     }
 }

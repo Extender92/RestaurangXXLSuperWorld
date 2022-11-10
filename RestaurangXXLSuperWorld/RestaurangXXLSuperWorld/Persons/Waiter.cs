@@ -25,7 +25,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         private List<Table>? tables; 
         // Individual service quality representing the charisma and mood of the waiter 
         internal double ServiceQuality;
-        private int CollectedTip { get; set; }
+        internal int CollectedTip { get; set; }
         internal static int TotalCollectedTip { get; set; }
 
 
@@ -189,8 +189,8 @@ namespace RestaurangXXLSuperWorld.Persons {
             tableCleaning--;
             if (tableCleaning == 0) {
                 _tableToClean._timeSinceCleaned = 0;
+                Restaurant.ServedVisitors += _tableToClean.seatedGuests.Size();
                 _tableToClean.UnSeatGuests();
-                Restaurant.completedOrders++;
                 GUI.DrawWaiterAtKitchen(kitchen, this);
                 return;
             }
