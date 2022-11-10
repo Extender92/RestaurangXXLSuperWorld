@@ -24,7 +24,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private List<Table> tables = new();
         private RestaurantQueue<Party<Customer>> restaurantQueue = RestaurantQueue<Party<Customer>>.InitializeQueue(dailyCustomers);
         internal static double totalCustomerSatisfaction;
-        internal static int ServedVisitors;
+        internal static int ServedVisitors { get; set; }
         private Kitchen kitchen;
         private RestaurantDoor door;
 
