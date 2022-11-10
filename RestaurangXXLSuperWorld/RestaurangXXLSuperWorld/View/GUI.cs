@@ -194,6 +194,14 @@ namespace RestaurangXXLSuperWorld.View
             }
             DrawNews("Waiter News", 50, 15, currentlyDoing);
         }
+
+        internal static void PrintRestuarantInfo(int currentNumberOfCustomers, int totalAmountOfCustomers, int totalTipping, double averageSatisfaction)
+        {
+            string[] news = new string[]{ $"Antal besökare just nu: {currentNumberOfCustomers}", $"Totalt antal besökare: {totalAmountOfCustomers}", $"Total dricks: {totalTipping}", $"Medel på kundnöjdhet: {averageSatisfaction}" };
+
+            DrawNews("Restaurang Info", 85, 1, news);
+        } 
+
         private static void DrawNews(string header, int fromLeft, int fromTop, string[] graphics)
         {
 
