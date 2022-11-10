@@ -79,13 +79,13 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
             return seatedGuests == party;
         }
 
-        internal void PrintParty()
-        {
-            if (seatedGuests != null)
-                GUI.PartyTablePrinter(this);
-            //else
-            //    Console.WriteLine(0);
-        }
+        //internal void PrintParty()
+        //{
+        //    if (seatedGuests != null)
+        //        GUI.PartyTablePrinter(this);
+        //    //else
+        //    //    Console.WriteLine(0);
+        //}
         internal void Update() {
             _timeSinceCleaned++;
             if(TablesOrder.Step == OrderSteps.Delivered && TablesOrder.TimeElapsed() < eatingTime) {

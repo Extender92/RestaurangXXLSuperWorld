@@ -81,7 +81,9 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
             }
             foreach (Table table in tables)
             {
+                GUI.PartyPrintTableCleaner(table);
                 table.Update();
+                GUI.PartyTablePrinter(table);
             }
             kitchen.Update();
             //GUI.PrintKitchenNews(kitchen.chefs);

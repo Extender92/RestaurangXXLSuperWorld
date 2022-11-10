@@ -138,7 +138,7 @@ namespace RestaurangXXLSuperWorld.Persons {
                 firstTable.TablesOrder.AssignWaiter(this);
                 PresentTodaysMenu(firstTable, _toEntable);
                 _toEntable = null;
-                firstTable.PrintParty();
+                //GUI.PartyTablePrinter(firstTable);
             }
         }
 

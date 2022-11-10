@@ -93,14 +93,33 @@ namespace RestaurangXXLSuperWorld.View
         internal static void PartyTablePrinter(Table table)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.SetCursorPosition((table.positionX + 1), (table.positionY + 3));
-            Console.Write(table.GetParty()[0].LastName + " " + (table.GetParty().Count - 1));
-                       
+
+            if (table.seatedGuests != null)
+            {
+                Console.SetCursorPosition((table.positionX + 1), (table.positionY + 3));
+                Console.Write("Party:");
+                Console.SetCursorPosition((table.positionX + 1), (table.positionY + 4));
+                Console.Write(table.GetParty()[0].LastName + " " + (table.GetParty().Count - 1));
+
+            }
+            Console.SetCursorPosition((table.positionX + 1), (table.positionY + 5));
+            Console.Write("Nöjdhet: " + String.Format("{0:0.##}", table.GetTableSatisfaction()));
+
+            Console.SetCursorPosition((table.positionX + 1), (table.positionY + 1));
+            Console.Write("Status: ");
+            Console.SetCursorPosition((table.positionX + 1), (table.positionY + 2));
+            Console.Write(table.Status);
         }
 
         internal static void PartyPrintTableCleaner(Table table)
         {
+            Console.SetCursorPosition((table.positionX + 1), (table.positionY + 2));
+            Console.Write(new string(' ', 12));
+
             Console.SetCursorPosition((table.positionX + 1), (table.positionY + 3));
+            Console.Write(new string(' ', 12));
+
+            Console.SetCursorPosition((table.positionX + 1), (table.positionY + 5));
             Console.Write(new string(' ', 12));
         }
 
@@ -160,7 +179,7 @@ namespace RestaurangXXLSuperWorld.View
             if (queue is null) {
                 for (int i = 0; i < 4; i++) {
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.SetCursorPosition(door.positionX + 4, (door.positionY + i));
+                    Console.SetCursorPosition(door.positionX + 4, (door.positionY + i + 1));
                     Console.Write(new String(' ', 120));
                 }
             } else {
@@ -169,7 +188,7 @@ namespace RestaurangXXLSuperWorld.View
                 foreach (Party<Customer> party in parties) {
                     for (int i = 0; i < party.Size(); i++) {
                         Console.ForegroundColor = ConsoleColor.Gray;
-                        Console.SetCursorPosition(door.positionX + 4 + 21*xOffsets, (door.positionY + i));
+                        Console.SetCursorPosition(door.positionX + 4 + 21*xOffsets, (door.positionY + i + 1));
                         Console.Write(party._members[i].FirstName + " " + party._members[i].LastName);
                     }
                     xOffsets++;
@@ -188,16 +207,20 @@ namespace RestaurangXXLSuperWorld.View
         internal static void PrintWaitresNews(Waiter[] waiters)
         {
             string[] currentlyDoing = new string[3];
+            (string, int)[] tips = restaurant.GetTipForEachWaiter();
             for (int i = 0; i < 3; i++)
             {
-                currentlyDoing[i] = waiters[i].doing;
+                currentlyDoing[i] = "Namn: " + tips[i].Item1 + "\tDricks: " + tips[i].Item2 + "\tAktivitet: "+ waiters[i].doing;
             }
             DrawNews("Waiter News", 85, 8, currentlyDoing);
         }
 
         internal static void PrintRestuarantInfo()
         {
-            string[] news = new string[]{ $"Antal besökare just nu: {restaurant.GetNumberOfVisitors()}", $"Totalt antal besökare: {restaurant.GetNumberOfVisitors() + restaurant.GetTotalNumberOfVisitorsCompleted()}", $"Total dricks: {restaurant.GetTotalTip()}", $"Medel på kundnöjdhet: {restaurant.GetAverageSatisfaction()}" };
+            string[] news = new string[]
+            {
+                $"Antal besökare just nu: {restaurant.GetNumberOfVisitors()}", $"Totalt antal besökare: {restaurant.GetNumberOfVisitors() + restaurant.GetTotalNumberOfVisitorsCompleted()}", $"Total dricks: {restaurant.GetTotalTip()}", $"Medel på kundnöjdhet: {restaurant.GetAverageSatisfaction()}"
+            };
 
             DrawNews("Restaurang Info", 85, 1, news);
         } 
