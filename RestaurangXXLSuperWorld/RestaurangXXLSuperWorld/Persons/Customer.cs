@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace RestaurangXXLSuperWorld.Persons {
     internal class Customer : Person {
         public int Money { get; set; }
-        public double Satisfaction { get; private set; }
+        internal double Satisfaction { get; private set; }
         public Customer() {
             Random random = new Random();
             Money = random.Next(120, 361);
