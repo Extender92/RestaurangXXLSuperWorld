@@ -136,5 +136,12 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         internal double GetAverageSatisfaction() {
             return totalCustomerSatisfaction / ServedVisitors;
         }
+
+        internal void PrintNews()
+        {
+            GUI.PrintRestuarantInfo();
+            GUI.PrintWaitresNews(waiters.ToArray());
+            GUI.PrintKitchenNews(kitchen.chefs.ToArray());
+        }
     }
 }

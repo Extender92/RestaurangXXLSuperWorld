@@ -23,7 +23,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private List<Customer> slaveCustomer = new List<Customer>();
         private List<Customer> masterCustomer = new List<Customer>();
 
-        internal List<Person> chefs = new List<Person>();
+        internal List<Chef> chefs = new List<Chef>();
 
         private List<Order> currentlyCooking = new List<Order>();
 

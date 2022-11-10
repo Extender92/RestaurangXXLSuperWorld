@@ -178,21 +178,21 @@ namespace RestaurangXXLSuperWorld.View
         }
         internal static void PrintKitchenNews(Chef[] chefs)
         {
-            string[] currentlyDoing = new string[3];
-            for (int i = 0; i < 3; i++)
+            string[] currentlyDoing = new string[chefs.Length];
+            for (int i = 0; i < chefs.Length; i++)
             {
                 currentlyDoing[i] = chefs[i].doing;
             }
-            DrawNews("Kitchen News", 50, 5, currentlyDoing);
+            DrawNews("Kitchen News", 85, 13, currentlyDoing);
         }
         internal static void PrintWaitresNews(Waiter[] waiters)
         {
             string[] currentlyDoing = new string[3];
             for (int i = 0; i < 3; i++)
             {
-        //        currentlyDoing[i] = waiters[i].doing;
+                currentlyDoing[i] = waiters[i].doing;
             }
-            DrawNews("Waiter News", 50, 15, currentlyDoing);
+            DrawNews("Waiter News", 85, 8, currentlyDoing);
         }
 
         internal static void PrintRestuarantInfo()

@@ -17,7 +17,7 @@ namespace RestaurangXXLSuperWorld {
             Console.SetBufferSize(300,300);
             Console.SetWindowSize(Console.LargestWindowWidth,Console.LargestWindowHeight);
             while (true) {
-                GUI.PrintRestuarantInfo();
+                restaurant.PrintNews();
                 restaurant.Update();
                 Thread.Sleep(FrameTime - timer.ElapsedMillisecs());
                 ////var currentTimeFormated = DateTime.Now.ToString(@"{0:mm:ss.ffff}");

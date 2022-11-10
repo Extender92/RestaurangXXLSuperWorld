@@ -27,7 +27,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         internal double ServiceQuality;
         internal int CollectedTip { get; set; }
         internal static int TotalCollectedTip { get; set; }
-
+        internal string doing = "idle";
 
         private void SetQuality()
         {
