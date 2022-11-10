@@ -97,5 +97,12 @@ namespace RestaurangXXLSuperWorld.Persons {
         internal int Count() {
             return _groups.Count;
         }
+        internal int CountPersons() {
+            int acc = 0;
+            foreach(T member in _groups) {
+                acc += member.Size();
+            }
+            return acc;
+        }
     }
 }

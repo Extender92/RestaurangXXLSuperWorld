@@ -16,6 +16,7 @@ namespace RestaurangXXLSuperWorld {
             Console.CursorVisible = false;
             Console.SetBufferSize(300,300);
             Console.SetWindowSize(Console.LargestWindowWidth,Console.LargestWindowHeight);
+
             while (true) {
                 restaurant.PrintNews();
                 restaurant.Update();

@@ -123,6 +123,7 @@ namespace RestaurangXXLSuperWorld.Persons {
                     }
                 }
             }
+            queue.PutInFront(_toEntable);
             _toEntable = null;
             return false;
         }

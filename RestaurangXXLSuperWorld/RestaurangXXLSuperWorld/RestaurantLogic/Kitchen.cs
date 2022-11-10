@@ -17,7 +17,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         internal int positionX;
         internal int positionY = 21;
 
-        internal int sizeX = 15;
+        internal int sizeX = 45;
         internal int sizeY = 9;
 
         private List<Customer> slaveCustomer = new List<Customer>();

@@ -74,7 +74,7 @@ namespace RestaurangXXLSuperWorld.Persons {
                 currentlyCooking.UpdateOrder();
                 currentlyCooking = null;
                 isIdle = true;
-                doing = "idle";
+                doing = $"Kocken {this.FirstName} slipar köttyxan";
             }
         }
     }
