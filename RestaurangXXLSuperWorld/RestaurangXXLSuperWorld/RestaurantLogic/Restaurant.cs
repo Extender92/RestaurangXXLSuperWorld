@@ -31,6 +31,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         {
             kitchen = new(positionX, sizeX);
             door = new(positionX, positionY, sizeX, sizeY);
+            GUI.restaurant = this;
         }
 
 
