@@ -23,6 +23,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         private List<Waiter> waiters = new();
         private List<Table> tables = new();
         private RestaurantQueue<Party<Customer>> restaurantQueue = RestaurantQueue<Party<Customer>>.InitializeQueue(dailyCustomers);
+        internal static double totalCustomerSatisfaction;
         internal static int ServedVisitors;
         private Kitchen kitchen;
         private RestaurantDoor door;
@@ -130,6 +131,9 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
                 values[i] = (waiters[i].FirstName, waiters[i].CollectedTip);
             }
             return values;
+        }
+        internal double GetAverageSatisfaction() {
+            return totalCustomerSatisfaction / ServedVisitors;
         }
     }
 }
