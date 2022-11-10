@@ -34,12 +34,12 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         internal List<string> GetList()
         {
             List<string> list = new List<string>();
-            list.Add(Target.GetParty()[0].LastName + " +" + (Target.GetParty().Count - 1));
+            list.Add("Party: " + Target.GetParty()[0].LastName + " +" + (Target.GetParty().Count - 1));
             for (int i = 0; i < _dishes.Count; i++)
             {
-                list.Add(_dishes[i].ToString());
+                list.Add("Mat: " + _dishes[i].ToString());
             }
-            list.Add(String.Format("{0:0.##}", Target.GetTableSatisfaction()));
+            list.Add(String.Format("Nöjdhet: " + "{0:0.##}", Target.GetTableSatisfaction()));
 
             return list;
         }

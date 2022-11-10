@@ -1,6 +1,7 @@
 ﻿using RestaurangXXLSuperWorld.Persons;
 using RestaurangXXLSuperWorld.RestaurantLogic;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Drawing;
@@ -16,6 +17,7 @@ namespace RestaurangXXLSuperWorld.View
         static int waitersAtKitchen = 0;
         internal static Restaurant restaurant;
         static int waitersAtQueue = 0;
+        internal static List<List<string>> leavingGuests = new List<List<string>>();
 
 
 
@@ -174,13 +176,13 @@ namespace RestaurangXXLSuperWorld.View
         }
         internal static void PrintQueueAtDoor(RestaurantQueue<Party<Customer>>? queue, RestaurantDoor door) {
             if (queue is null) {
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 5; i++) {
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.SetCursorPosition(door.positionX + 4, (door.positionY + i + 1));
                     Console.Write(new String(' ', 120));
                 }
             } else {
-                ImmutableList<Party<Customer>> parties = queue.Peek(Math.Min(6, queue.Count()));
+                ImmutableList<Party<Customer>> parties = queue.Peek(Math.Min(5, queue.Count()));
                 int xOffsets = 0;
                 foreach (Party<Customer> party in parties) {
                     for (int i = 0; i < party.Size(); i++) {
@@ -192,44 +194,32 @@ namespace RestaurangXXLSuperWorld.View
                 }
             }
         }
-        internal static void PrintPartyLeaving(RestaurantQueue<Party<Customer>>? queue, RestaurantDoor door)
+        internal static void PrintPartyLeaving(RestaurantDoor door)
         {
-            if (queue is null)
+
+
+            int length = Math.Min(1, leavingGuests.Count());
+            for (int i = 0; i < length; i++)
             {
-                for (int i = 0; i < 4; i++)
+                List<string> news = leavingGuests[i];
+
+                while (news.Count < 6)
                 {
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.SetCursorPosition(door.positionX + 4, (door.positionY + i + 1));
-                    Console.Write(new String(' ', 120));
+                    news.Add(" ");
                 }
-            }
-            else
-            {
-                ImmutableList<Party<Customer>> parties = queue.Peek(Math.Min(6, queue.Count()));
-                int xOffsets = 0;
-                foreach (Party<Customer> party in parties)
-                {
-                    for (int i = 0; i < party.Size(); i++)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Gray;
-                        Console.SetCursorPosition(door.positionX + 4 + 21 * xOffsets, (door.positionY + i + 1));
-                        Console.Write(party._members[i].FirstName + " " + party._members[i].LastName);
-                    }
-                    xOffsets++;
-                }
+                PrintNews("Gäster som lämnar restaurangen:", (door.positionX + 4), (door.positionY - 10), 100, news.ToArray(), ConsoleColor.DarkCyan, ConsoleColor.DarkGray);
             }
         }
         internal static void PrintKitchenNews(Chef[] chefs, Kitchen kitchen)
         {
-            string[] currentlyDoing = new string[chefs.Length + 1];
-            currentlyDoing[0] = "Köket News:";
-            for (int i = 1; i < currentlyDoing.Length; i++)
+            string[] currentlyDoing = new string[chefs.Length];
+            for (int i = 0; i < currentlyDoing.Length; i++)
             {
-                currentlyDoing[i] = chefs[i - 1].doing;
+                currentlyDoing[i] = chefs[i].doing;
             }
 
             //DrawNews("Kitchen News", 85, 13, currentlyDoing);
-            PrintNews(kitchen.positionX + kitchen.sizeX + 2, kitchen.positionY + 1, 80, currentlyDoing, ConsoleColor.Yellow, ConsoleColor.Blue);
+            PrintNews("Köket News:", kitchen.positionX + kitchen.sizeX + 2, kitchen.positionY + 1, 80, currentlyDoing, ConsoleColor.Yellow, ConsoleColor.Blue);
 
             //Console.SetCursorPosition(kitchen.positionX + 1, kitchen.positionY + 1);
             //Console.Write("Köket:");
@@ -241,35 +231,36 @@ namespace RestaurangXXLSuperWorld.View
         }
         internal static void PrintWaitresNews(Waiter[] waiters)
         {
-            string[] currentlyDoing = new string[4];
+            string[] currentlyDoing = new string[waiters.Length];
             (string, int)[] tips = restaurant.GetTipForEachWaiter();
-            currentlyDoing[0] = "Servitör News:";
-            for (int i = 1; i <= 3; i++)
+            for (int i = 0; i < 3; i++)
             {
-                currentlyDoing[i] = /*"Namn: " + */tips[i - 1].Item1 + ": " + tips[i - 1].Item2 + "kr i dricks. Aktivitet: "+ waiters[i - 1].doing;
+                currentlyDoing[i] = /*"Namn: " + */tips[i].Item1 + ": " + tips[i].Item2 + "kr i dricks. Aktivitet: "+ waiters[i].doing;
             }
-            PrintNews(85, 8, 76, currentlyDoing, ConsoleColor.DarkBlue, ConsoleColor.DarkGreen);
+            PrintNews("Servitör News:", 85, 8, 76, currentlyDoing, ConsoleColor.DarkBlue, ConsoleColor.DarkGreen);
         }
 
         internal static void PrintRestuarantInfo()
         {
             string[] news = new string[]
             {
-                $"Restaurang Info:", $"Antal besökare just nu: {restaurant.GetNumberOfVisitors()}", $"Totalt antal besökare: {restaurant.GetNumberOfVisitors() + restaurant.GetTotalNumberOfVisitorsCompleted()}", $"Total dricks: {restaurant.GetTotalTip()}", $"Medel på kundnöjdhet: {String.Format("{0:0.##}", restaurant.GetAverageSatisfaction())}"
+                $"Antal besökare just nu: {restaurant.GetNumberOfVisitors()}", $"Totalt antal besökare: {restaurant.GetNumberOfVisitors() + restaurant.GetTotalNumberOfVisitorsCompleted()}", $"Total dricks: {restaurant.GetTotalTip()}", $"Medel på kundnöjdhet: {String.Format("{0:0.##}", restaurant.GetAverageSatisfaction())}"
             };
 
             //DrawNews("Restaurang Info", 85, 1, news);
-            PrintNews(85, 1, 32, news, ConsoleColor.DarkRed, ConsoleColor.DarkYellow);
+            PrintNews("Restaurang Info:", 85, 1, 32, news, ConsoleColor.DarkRed, ConsoleColor.DarkYellow);
         } 
 
-        internal static void PrintNews(int positionX, int PositionY, int sizeX, string[] news, ConsoleColor borderColor, ConsoleColor textColor)
+        internal static void PrintNews(string header, int positionX, int PositionY, int sizeX, string[] news, ConsoleColor borderColor, ConsoleColor textColor)
         {
             Console.ForegroundColor = borderColor;
             Console.SetCursorPosition(positionX, PositionY);
             Console.Write('┌' + new String('─', sizeX - 2) + '┐');
+            Console.SetCursorPosition(positionX, PositionY + 1);
+            Console.Write('│' + " " + header + new String(' ', sizeX - header.Length - 3) + '│');
             for (int i = 0; i < news.Length; i++)
             {
-                Console.SetCursorPosition(positionX, PositionY + 1 + i);
+                Console.SetCursorPosition(positionX, PositionY + 2 + i);
                 Console.Write('│');
 
                 Console.ForegroundColor = textColor;
@@ -278,7 +269,7 @@ namespace RestaurangXXLSuperWorld.View
                 Console.ForegroundColor = borderColor;
                 Console.Write('│');
             }
-            Console.SetCursorPosition(positionX, PositionY + news.Length + 1);
+            Console.SetCursorPosition(positionX, PositionY + news.Length + 2);
             Console.Write('└' + new String('─', sizeX - 2) + '┘');
         }
 

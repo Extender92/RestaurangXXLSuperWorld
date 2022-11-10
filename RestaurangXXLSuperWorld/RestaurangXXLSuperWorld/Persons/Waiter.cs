@@ -100,11 +100,11 @@ namespace RestaurangXXLSuperWorld.Persons {
                 var freeTables = from table in tables where table.IsFree()
                                  select table;
                 foreach (Table table in freeTables) {
-                    if(largeTablesForSmallParties == true) {
+                    //if(largeTablesForSmallParties == true) {
                         if (firstParty.First().Size() <= table.GetNumberOfChairs() && (largeTablesForSmallParties ? true : table.GetNumberOfChairs() - firstParty.First().Size() <= 1)) {
                             return true;
                         }
-                    }
+                   // }
                 }
             }
             return false;
@@ -220,7 +220,7 @@ namespace RestaurangXXLSuperWorld.Persons {
                         }
                         tableCleaning = 3;
                         _tableToClean = table;
-                        _tableToClean.TablesOrder.GetList();
+                        GUI.leavingGuests.Insert(0, (_tableToClean.TablesOrder.GetList()));
                         table.TablesOrder.ResetOrder();
                         GUI.DrawWaiterAtTable(table, this);
                         GUI.PartyPrintTableCleaner(table);
