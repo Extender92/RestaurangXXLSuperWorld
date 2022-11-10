@@ -81,7 +81,9 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
             }
             foreach (Table table in tables)
             {
+                GUI.PartyPrintTableCleaner(table);
                 table.Update();
+                GUI.PartyTablePrinter(table);
             }
             kitchen.Update();
             //GUI.PrintKitchenNews(kitchen.chefs);
@@ -141,7 +143,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         {
             GUI.PrintRestuarantInfo();
             GUI.PrintWaitresNews(waiters.ToArray());
-            GUI.PrintKitchenNews(kitchen.chefs.ToArray());
+            GUI.PrintKitchenNews(kitchen.chefs.ToArray(), kitchen);
         }
     }
 }
