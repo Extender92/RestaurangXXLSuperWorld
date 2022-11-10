@@ -189,7 +189,6 @@ namespace RestaurangXXLSuperWorld.Persons {
             tableCleaning--;
             if (tableCleaning == 0) {
                 _tableToClean._timeSinceCleaned = 0;
-                Restaurant.ServedVisitors += _tableToClean.seatedGuests.Size();
                 foreach(Customer guest in _tableToClean.seatedGuests._members) {
                     Restaurant.totalCustomerSatisfaction += guest.Satisfaction;
                 }

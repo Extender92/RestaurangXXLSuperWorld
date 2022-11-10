@@ -81,6 +81,8 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
 
             else
                 serviceQuality = SingleWaiter.ServiceQuality * 0.8;
+
+            SetCustomerSatisfaction();
         }
 
         private void SetCustomerSatisfaction()

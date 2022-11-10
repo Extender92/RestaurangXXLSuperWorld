@@ -62,8 +62,10 @@ namespace RestaurangXXLSuperWorld.Persons {
                 return; 
             }
             doing = $"Kocken {this.FirstName} ";
+            if(currentlyCooking._dishes.Count > 0) {
+                doing += $"{currentlyCooking._dishes[0].GetCurrentStep()}";
+            }
             foreach (FoodItem dish in currentlyCooking._dishes) {
-                doing += $"{dish.GetCurrentStep()}";
                 dish.Cook();
             }
             if (currentlyCooking._dishes[0].IsDone)

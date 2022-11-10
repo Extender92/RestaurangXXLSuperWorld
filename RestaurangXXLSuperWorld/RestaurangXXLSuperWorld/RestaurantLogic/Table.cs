@@ -73,6 +73,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
             DetermineTableQualityLevel();
         }
         internal void UnSeatGuests() {
+            Restaurant.ServedVisitors += seatedGuests.Size();
             seatedGuests = null;
         }
         internal bool IsPartySeated(Party<Customer> party) {
