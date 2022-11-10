@@ -206,23 +206,23 @@ namespace RestaurangXXLSuperWorld.Persons {
             {
                 if (table.TablesOrder.Step == OrderSteps.Finished && table.TablesOrder.SingleWaiter == this)
                 {
-                    for (int i = 0; i < table.TablesOrder._dishes.Count; i++)
-                    {
+                    for (int i = 0; i < table.TablesOrder._dishes.Count; i++) {
                         if (!table.GetParty()[i].CanAfford(table.TablesOrder._dishes[i])) {
                             table.GetParty()[i].PayForFood(table.TablesOrder._dishes[i].Price);
                             //Set in slave service
                         } else {
                             // Total paid sum                                                    The cost of food ordered
-                            CollectedTip += table.GetParty()[i].PayForFood(table.TablesOrder._dishes[i].Price) - table.TablesOrder._dishes[i].Price;
-                            TotalCollectedTip += table.GetParty()[i].PayForFood(table.TablesOrder._dishes[i].Price) - table.TablesOrder._dishes[i].Price;
+                            int tipSum = table.GetParty()[i].PayForFood(table.TablesOrder._dishes[i].Price) - table.TablesOrder._dishes[i].Price;
+                            CollectedTip += tipSum;
+                            TotalCollectedTip += tipSum;
                         }
+                        tableCleaning = 3;
+                        _tableToClean = table;
+                        table.TablesOrder.ResetOrder();
+                        GUI.DrawWaiterAtTable(table, this);
+                        GUI.PartyPrintTableCleaner(table);
+                        return true;
                     }
-                    tableCleaning = 3;
-                    _tableToClean = table;
-                    table.TablesOrder.ResetOrder();
-                    GUI.DrawWaiterAtTable(table, this);
-                    GUI.PartyPrintTableCleaner(table);
-                    return true;
                 }
             }
             return false;
