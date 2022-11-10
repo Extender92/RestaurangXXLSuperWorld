@@ -33,6 +33,13 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
 
         internal void UpdateOrder() {
             Step++;
+            if (Step == OrderSteps.ToBeOrdered) {
+                Target.Status = Table.TableStatus.Waiting;
+            } else if (Step == OrderSteps.Delivered) {
+                Target.Status = Table.TableStatus.Eating;
+            } else if (Step == OrderSteps.Finished) {
+                Target.Status = Table.TableStatus.Finished;
+            }
         }
 
         internal string GetStatus() {
@@ -85,6 +92,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         }
 
         internal void ResetOrder() {
+            Target.Status = Table.TableStatus.Empty;
             _timeOrdered = null;
             _timeDelivered = null;
             _totalSum = 0;

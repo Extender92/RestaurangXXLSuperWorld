@@ -195,8 +195,10 @@ namespace RestaurangXXLSuperWorld.Persons {
                 }
                 _tableToClean.UnSeatGuests();
                 GUI.DrawWaiterAtKitchen(kitchen, this);
+                _tableToClean.Status = Table.TableStatus.Empty;
                 return;
             }
+            _tableToClean.Status = Table.TableStatus.Cleaning;
             GUI.DrawWaiterAtTable(_tableToClean, this);
         }
 

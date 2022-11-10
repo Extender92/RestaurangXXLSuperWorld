@@ -12,12 +12,14 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
     internal abstract class Table
     {
         internal enum TableStatus {
-            Initial,
+            Empty,
             Waiting,  // Waiting for food
             Eating,   // Eating their food
             Finished, // Wants to leave
             Cleaning, // Waiter is cleaning table
         }
+
+        internal TableStatus Status { get; set; }
         private double eatingTime = 19.9D;
         internal static char[] charSet = { '┌', '─', '┐', '│', '└', '┘' };
         private ConsoleColor Color = ConsoleColor.Blue;
@@ -42,6 +44,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
 
         internal Table (int positionX, int positionY)
         {
+            Status = TableStatus.Empty;
             this.positionX = positionX;
             this.positionY = positionY;
             TodaysMenu = new Menu ();
@@ -100,6 +103,19 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         internal List<Customer> GetParty()
         {
             return seatedGuests.getParty().ToList();
+        }
+
+        internal double GetTableSatisfaction() {
+            double average = 0.0D;
+            if (seatedGuests is null) {
+                return 0.0;
+            } else {
+                foreach (Customer guest in seatedGuests._members) {
+                    average += guest.Satisfaction;
+                }
+                average /= seatedGuests.Size();
+                return average;
+            }
         }
 
     }
