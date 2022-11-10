@@ -79,7 +79,6 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
             }
             foreach (Table table in tables)
             {
-                table.PrintParty();
                 table.Update();
             }
             kitchen.Update();

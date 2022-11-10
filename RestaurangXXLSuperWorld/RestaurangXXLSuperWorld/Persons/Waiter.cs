@@ -138,6 +138,7 @@ namespace RestaurangXXLSuperWorld.Persons {
                 firstTable.TablesOrder.AssignWaiter(this);
                 PresentTodaysMenu(firstTable, _toEntable);
                 _toEntable = null;
+                firstTable.PrintParty();
             }
         }
 
@@ -217,6 +218,7 @@ namespace RestaurangXXLSuperWorld.Persons {
                     _tableToClean = table;
                     table.TablesOrder.ResetOrder();
                     GUI.DrawWaiterAtTable(table, this);
+                    GUI.PartyPrintTableCleaner(table);
                     return true;
                 }
             }

@@ -98,6 +98,12 @@ namespace RestaurangXXLSuperWorld.View
                        
         }
 
+        internal static void PartyPrintTableCleaner(Table table)
+        {
+            Console.SetCursorPosition((table.positionX + 1), (table.positionY + 3));
+            Console.Write(new string(' ', 12));
+        }
+
         internal static void DrawWaiterAtTable(Table table, Waiter? waiter)
         {
             if (waiter == null)
