@@ -103,7 +103,7 @@ namespace RestaurangXXLSuperWorld.View
 
             }
             Console.SetCursorPosition((table.positionX + 1), (table.positionY + 5));
-            Console.Write("Nöjdhet: " + String.Format("{0:0.##}", table.GetTableSatisfaction()));
+            Console.Write("Nöjdhet: " + String.Format("{0:0}", table.GetTableSatisfaction()));
 
             Console.SetCursorPosition((table.positionX + 1), (table.positionY + 1));
             Console.Write("Status: ");
@@ -113,14 +113,11 @@ namespace RestaurangXXLSuperWorld.View
 
         internal static void PartyPrintTableCleaner(Table table)
         {
-            Console.SetCursorPosition((table.positionX + 1), (table.positionY + 2));
-            Console.Write(new string(' ', 12));
-
-            Console.SetCursorPosition((table.positionX + 1), (table.positionY + 3));
-            Console.Write(new string(' ', 12));
-
-            Console.SetCursorPosition((table.positionX + 1), (table.positionY + 5));
-            Console.Write(new string(' ', 12));
+            for (int i = 1; i <= 5; i++)
+            {
+                Console.SetCursorPosition((table.positionX + 1), (table.positionY + i));
+                Console.Write(new string(' ', 12));
+            }
         }
 
         internal static void DrawWaiterAtTable(Table table, Waiter? waiter)
@@ -183,7 +180,7 @@ namespace RestaurangXXLSuperWorld.View
                     Console.Write(new String(' ', 120));
                 }
             } else {
-                ImmutableList<Party<Customer>> parties = queue.Peek(Math.Min(4, queue.Count()));
+                ImmutableList<Party<Customer>> parties = queue.Peek(Math.Min(6, queue.Count()));
                 int xOffsets = 0;
                 foreach (Party<Customer> party in parties) {
                     for (int i = 0; i < party.Size(); i++) {
@@ -209,7 +206,7 @@ namespace RestaurangXXLSuperWorld.View
             Console.Write("Köket:");
             for (int i = 0; i < currentlyDoing.Length; i++)
             {
-                Console.SetCursorPosition(kitchen.positionX + 1, kitchen.positionY + i + 2);
+                Console.SetCursorPosition(kitchen.positionX + kitchen.sizeX + 2, kitchen.positionY + i + 2);
                 Console.Write(currentlyDoing[i]);
             }
         }
@@ -231,8 +228,22 @@ namespace RestaurangXXLSuperWorld.View
                 $"Antal besökare just nu: {restaurant.GetNumberOfVisitors()}", $"Totalt antal besökare: {restaurant.GetNumberOfVisitors() + restaurant.GetTotalNumberOfVisitorsCompleted()}", $"Total dricks: {restaurant.GetTotalTip()}", $"Medel på kundnöjdhet: {String.Format("{0:0.##}", restaurant.GetAverageSatisfaction())}"
             };
 
-            DrawNews("Restaurang Info", 85, 1, news);
+            //DrawNews("Restaurang Info", 85, 1, news);
+            PrintBordersForNews("Restaurang Info", 85, 1, 40, 5, news);
         } 
+
+        internal static void PrintBordersForNews(string header, int positionX, int PositionY, int sizeX, int sizeY, string[] news)
+        {
+            Console.SetCursorPosition(positionX, PositionY);
+            Console.Write('┌' + new String('─', sizeX - 2) + '┐');
+            for (int i = 0; i < news.Length; i++)
+            {
+                Console.SetCursorPosition(positionX, PositionY + 1 + i);
+                Console.Write('│' + " " + news[i] + new String(' ', sizeY + 1) + '│');
+            }
+            Console.SetCursorPosition(positionX, PositionY + news.Length + 1);
+            Console.Write('└' + new String('─', sizeX - 2) + '┘');
+        }
 
         private static void DrawNews(string header, int fromLeft, int fromTop, string[] graphics)
         {
