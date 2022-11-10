@@ -14,7 +14,7 @@ namespace RestaurangXXLSuperWorld.View
     internal class GUI
     {
         static int waitersAtKitchen = 0;
-
+        internal static Restaurant restaurant;
         static int waitersAtQueue = 0;
 
 
@@ -195,9 +195,9 @@ namespace RestaurangXXLSuperWorld.View
             DrawNews("Waiter News", 50, 15, currentlyDoing);
         }
 
-        internal static void PrintRestuarantInfo(int currentNumberOfCustomers, int totalAmountOfCustomers, int totalTipping, double averageSatisfaction)
+        internal static void PrintRestuarantInfo()
         {
-            string[] news = new string[]{ $"Antal besökare just nu: {currentNumberOfCustomers}", $"Totalt antal besökare: {totalAmountOfCustomers}", $"Total dricks: {totalTipping}", $"Medel på kundnöjdhet: {averageSatisfaction}" };
+            string[] news = new string[]{ $"Antal besökare just nu: {restaurant.GetNumberOfVisitors}", $"Totalt antal besökare: {restaurant.GetTotalNumberOfVisitorsCompleted}", $"Total dricks: {restaurant.GetTotalTip}", $"Medel på kundnöjdhet: {restaurant}" };
 
             DrawNews("Restaurang Info", 85, 1, news);
         } 
