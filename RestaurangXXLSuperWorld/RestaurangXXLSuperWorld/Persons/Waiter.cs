@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace RestaurangXXLSuperWorld.Persons {
     internal class Waiter : Person {
-        private readonly bool anyTableForSmallParties = true;
+        private bool anyTableForSmallParties;
         // Reference to Kitchen the Waiter is Delivering to
         private Kitchen? kitchen;
         // Turns cleaning table
@@ -32,7 +32,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         private void SetQuality()
         {
             Random random = new();
-            ServiceQuality = random.NextDouble() * (96 - 50) + 50;
+            ServiceQuality = random.NextDouble() * (96 - 65) + 65;
         }
         private Table? FindEmptyTable()
         {
@@ -234,32 +234,54 @@ namespace RestaurangXXLSuperWorld.Persons {
         }
         private void PerformDuties() {
             if (tableCleaning > 0) {
+                doing = "Rengör bord";
                 CleanTable();
             } else if (_delivery is not null) {
+                doing = "Lämnar Order i kök";
                 DeliverOrderToKitchen(_delivery);
             } else if (_toEntable is not null) {
+                doing = "Spänner fast kunderna vid stolarna";
                 PlacePartyAtTable();
             }
         }
 
         internal void Update() {
+            CheckIfOutOfSmallTables();
+
+
             if (isBusy()) {
                 PerformDuties();
             }
             else if (CollectPayment()) {
-
+                doing = "Inkasserar pengar";
             } else if (DeliverOrderToTable()) {
+                doing = "Levererar mat";
             } else if (TakeOrderFromTable()) {
-
+                doing = "Tar kundens Order";
             } else if (CanFindTableForFirstParty()) {
+                doing = "Letar upp kunder vid entre";
                 GetFirstPartyInQueue();
                 GUI.DrawWaiterAtQueue(door, this);
             } else if (anyTableForSmallParties == true && CanFindTableForFirstParty(true)) {
+                doing = "Letar upp kunder vid entre";
                 GetFirstPartyInQueue();
                 GUI.DrawWaiterAtQueue(door, this);
             } 
             else {
                 GUI.DrawWaiterAtKitchen(kitchen, this);
+                doing = "Röker under köksfläkten";
+            }
+        }
+
+        private void CheckIfOutOfSmallTables() {
+            var smallTables = from table in tables
+                              where table.IsFree() == true && table is SmallTable
+                              select table;
+
+            if (smallTables.Any()) {
+                anyTableForSmallParties = true;
+            } else {
+                anyTableForSmallParties = false;
             }
         }
     }

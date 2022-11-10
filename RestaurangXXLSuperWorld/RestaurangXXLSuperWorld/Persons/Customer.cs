@@ -25,6 +25,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         internal void ModifySatisfaction(double foodQuality, double tableQuality, double serviceQuality) 
         {
             Satisfaction *= (foodQuality / 100) * (tableQuality / 10) * (serviceQuality / 100);
+            Satisfaction = Math.Max(0, Satisfaction);
         }
 
         internal int GetTipAmount(int moneyLeft) 

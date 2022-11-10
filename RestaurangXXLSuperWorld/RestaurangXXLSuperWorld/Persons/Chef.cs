@@ -25,7 +25,7 @@ namespace RestaurangXXLSuperWorld.Persons {
         private void SetCompetence()
         {
             Random random = new();
-            CompetenceQuality = random.NextDouble() * (96 - 50) + 50;
+            CompetenceQuality = random.NextDouble() * (96 - 65) + 65;
         }
 
         private void SetSpecialities()

@@ -97,7 +97,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         }
         // Fancy method for quality level when guests arrive based on time since cleaned and size (one man at big table == putin bad)
         private void DetermineTableQualityLevel() {
-            double cleanModifier = 1.2D - 0.05D * _timeSinceCleaned;
+            double cleanModifier = Math.Max(1.2D - 0.05D * _timeSinceCleaned , 0);
             double tableSizeModifier = 1.2D - 0.2 * (GetNumberOfChairs() - seatedGuests.Size());
             qualityLevel = 10.0D * cleanModifier * tableSizeModifier;
         }
