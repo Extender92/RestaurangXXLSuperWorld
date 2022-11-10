@@ -31,6 +31,19 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
             Step = OrderSteps.Initial;
         }
 
+        internal List<string> GetList()
+        {
+            List<string> list = new List<string>();
+            list.Add(Target.GetParty()[0].LastName + " +" + (Target.GetParty().Count - 1));
+            for (int i = 0; i < _dishes.Count; i++)
+            {
+                list.Add(_dishes[i].ToString());
+            }
+            list.Add(String.Format("{0:0.##}", Target.GetTableSatisfaction()));
+
+            return list;
+        }
+
         internal void UpdateOrder() {
             Step++;
             if (Step == OrderSteps.ToBeOrdered) {

@@ -18,8 +18,8 @@ namespace RestaurangXXLSuperWorld {
             Console.SetWindowSize(Console.LargestWindowWidth,Console.LargestWindowHeight);
 
             while (true) {
-                restaurant.PrintNews();
                 restaurant.Update();
+                restaurant.PrintNews();
                 Thread.Sleep(FrameTime - timer.ElapsedMillisecs());
                 ////var currentTimeFormated = DateTime.Now.ToString(@"{0:mm:ss.ffff}");
                 ////Console.SetCursorPosition(0,60);

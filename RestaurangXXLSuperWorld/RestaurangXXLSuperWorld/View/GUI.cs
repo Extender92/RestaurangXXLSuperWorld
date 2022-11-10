@@ -192,98 +192,135 @@ namespace RestaurangXXLSuperWorld.View
                 }
             }
         }
+        internal static void PrintPartyLeaving(RestaurantQueue<Party<Customer>>? queue, RestaurantDoor door)
+        {
+            if (queue is null)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.SetCursorPosition(door.positionX + 4, (door.positionY + i + 1));
+                    Console.Write(new String(' ', 120));
+                }
+            }
+            else
+            {
+                ImmutableList<Party<Customer>> parties = queue.Peek(Math.Min(6, queue.Count()));
+                int xOffsets = 0;
+                foreach (Party<Customer> party in parties)
+                {
+                    for (int i = 0; i < party.Size(); i++)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.SetCursorPosition(door.positionX + 4 + 21 * xOffsets, (door.positionY + i + 1));
+                        Console.Write(party._members[i].FirstName + " " + party._members[i].LastName);
+                    }
+                    xOffsets++;
+                }
+            }
+        }
         internal static void PrintKitchenNews(Chef[] chefs, Kitchen kitchen)
         {
-            string[] currentlyDoing = new string[chefs.Length];
-            for (int i = 0; i < chefs.Length; i++)
+            string[] currentlyDoing = new string[chefs.Length + 1];
+            currentlyDoing[0] = "Köket News:";
+            for (int i = 1; i < currentlyDoing.Length; i++)
             {
-                currentlyDoing[i] = chefs[i].doing;
+                currentlyDoing[i] = chefs[i - 1].doing;
             }
 
             //DrawNews("Kitchen News", 85, 13, currentlyDoing);
+            PrintNews(kitchen.positionX + kitchen.sizeX + 2, kitchen.positionY + 1, 80, currentlyDoing, ConsoleColor.Yellow, ConsoleColor.Blue);
 
-            Console.SetCursorPosition(kitchen.positionX + 1, kitchen.positionY + 1);
-            Console.Write("Köket:");
-            for (int i = 0; i < currentlyDoing.Length; i++)
-            {
-                Console.SetCursorPosition(kitchen.positionX + kitchen.sizeX + 2, kitchen.positionY + i + 2);
-                Console.Write(currentlyDoing[i]);
-            }
+            //Console.SetCursorPosition(kitchen.positionX + 1, kitchen.positionY + 1);
+            //Console.Write("Köket:");
+            //for (int i = 0; i < currentlyDoing.Length; i++)
+            //{
+            //    Console.SetCursorPosition(kitchen.positionX + kitchen.sizeX + 2, kitchen.positionY + i + 2);
+            //    Console.Write(currentlyDoing[i]);
+            //}
         }
         internal static void PrintWaitresNews(Waiter[] waiters)
         {
-            string[] currentlyDoing = new string[3];
+            string[] currentlyDoing = new string[4];
             (string, int)[] tips = restaurant.GetTipForEachWaiter();
-            for (int i = 0; i < 3; i++)
+            currentlyDoing[0] = "Servitör News:";
+            for (int i = 1; i <= 3; i++)
             {
-                currentlyDoing[i] = "Namn: " + tips[i].Item1 + "\tDricks: " + tips[i].Item2 + "\tAktivitet: "+ waiters[i].doing;
+                currentlyDoing[i] = /*"Namn: " + */tips[i - 1].Item1 + ": " + tips[i - 1].Item2 + "kr i dricks. Aktivitet: "+ waiters[i - 1].doing;
             }
-            DrawNews("Waiter News", 85, 8, currentlyDoing);
+            PrintNews(85, 8, 76, currentlyDoing, ConsoleColor.DarkBlue, ConsoleColor.DarkGreen);
         }
 
         internal static void PrintRestuarantInfo()
         {
             string[] news = new string[]
             {
-                $"Antal besökare just nu: {restaurant.GetNumberOfVisitors()}", $"Totalt antal besökare: {restaurant.GetNumberOfVisitors() + restaurant.GetTotalNumberOfVisitorsCompleted()}", $"Total dricks: {restaurant.GetTotalTip()}", $"Medel på kundnöjdhet: {String.Format("{0:0.##}", restaurant.GetAverageSatisfaction())}"
+                $"Restaurang Info:", $"Antal besökare just nu: {restaurant.GetNumberOfVisitors()}", $"Totalt antal besökare: {restaurant.GetNumberOfVisitors() + restaurant.GetTotalNumberOfVisitorsCompleted()}", $"Total dricks: {restaurant.GetTotalTip()}", $"Medel på kundnöjdhet: {String.Format("{0:0.##}", restaurant.GetAverageSatisfaction())}"
             };
 
             //DrawNews("Restaurang Info", 85, 1, news);
-            PrintBordersForNews("Restaurang Info", 85, 1, 40, 5, news);
+            PrintNews(85, 1, 32, news, ConsoleColor.DarkRed, ConsoleColor.DarkYellow);
         } 
 
-        internal static void PrintBordersForNews(string header, int positionX, int PositionY, int sizeX, int sizeY, string[] news)
+        internal static void PrintNews(int positionX, int PositionY, int sizeX, string[] news, ConsoleColor borderColor, ConsoleColor textColor)
         {
+            Console.ForegroundColor = borderColor;
             Console.SetCursorPosition(positionX, PositionY);
             Console.Write('┌' + new String('─', sizeX - 2) + '┐');
             for (int i = 0; i < news.Length; i++)
             {
                 Console.SetCursorPosition(positionX, PositionY + 1 + i);
-                Console.Write('│' + " " + news[i] + new String(' ', sizeY + 1) + '│');
+                Console.Write('│');
+
+                Console.ForegroundColor = textColor;
+                Console.Write(" " + news[i] + new String(' ', sizeX - news[i].Length - 3));
+
+                Console.ForegroundColor = borderColor;
+                Console.Write('│');
             }
             Console.SetCursorPosition(positionX, PositionY + news.Length + 1);
             Console.Write('└' + new String('─', sizeX - 2) + '┘');
         }
 
-        private static void DrawNews(string header, int fromLeft, int fromTop, string[] graphics)
-        {
+        //private static void DrawNews(string header, int fromLeft, int fromTop, string[] graphics)
+        //{
 
-            int width = 0;
-            for (int i = 0; i < graphics.Length; i++)
-            {
-                if (graphics[i].Length > width)
-                {
-                    width = graphics[i].Length;
-                }
-            }
-            if (width < header.Length + 4)
-            { width = header.Length + 4; };
+        //    int width = 0;
+        //    for (int i = 0; i < graphics.Length; i++)
+        //    {
+        //        if (graphics[i].Length > width)
+        //        {
+        //            width = graphics[i].Length;
+        //        }
+        //    }
+        //    if (width < header.Length + 4)
+        //    { width = header.Length + 4; };
 
-            Console.SetCursorPosition(fromLeft, fromTop);
-            if (header != "")
-            {
-                Console.Write('┌' + " ");
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.Write(header);
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.Write(" " + new String('─', width - header.Length) + '┐');
-            }
-            else
-            {
-                Console.Write('┌' + new String('─', width + 2) + '┐');
-            }
-            Console.WriteLine();
-            int maxRows = 0;
-            for (int j = 0; j < graphics.Length; j++)
-            {
-                Console.SetCursorPosition(fromLeft, fromTop + j + 1);
-                Console.WriteLine('│' + " " + graphics[j] + new String(' ', width - graphics[j].Length + 1) + '│');
-                maxRows = j;
-            }
-            Console.SetCursorPosition(fromLeft, fromTop + maxRows + 2);
-            Console.Write('└' + new String('─', width + 2) + '┘');
+        //    Console.SetCursorPosition(fromLeft, fromTop);
+        //    if (header != "")
+        //    {
+        //        Console.Write('┌' + " ");
+        //        Console.ForegroundColor = ConsoleColor.DarkGray;
+        //        Console.Write(header);
+        //        Console.ForegroundColor = ConsoleColor.White;
+        //        Console.Write(" " + new String('─', width - header.Length) + '┐');
+        //    }
+        //    else
+        //    {
+        //        Console.Write('┌' + new String('─', width + 2) + '┐');
+        //    }
+        //    Console.WriteLine();
+        //    int maxRows = 0;
+        //    for (int j = 0; j < graphics.Length; j++)
+        //    {
+        //        Console.SetCursorPosition(fromLeft, fromTop + j + 1);
+        //        Console.WriteLine('│' + " " + graphics[j] + new String(' ', width - graphics[j].Length + 1) + '│');
+        //        maxRows = j;
+        //    }
+        //    Console.SetCursorPosition(fromLeft, fromTop + maxRows + 2);
+        //    Console.Write('└' + new String('─', width + 2) + '┘');
 
-        }
+        //}
         internal static void ResetStatics()
         {
             waitersAtKitchen = 0;

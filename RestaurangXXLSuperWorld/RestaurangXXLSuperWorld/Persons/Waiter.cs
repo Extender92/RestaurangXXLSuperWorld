@@ -220,6 +220,7 @@ namespace RestaurangXXLSuperWorld.Persons {
                         }
                         tableCleaning = 3;
                         _tableToClean = table;
+                        _tableToClean.TablesOrder.GetList();
                         table.TablesOrder.ResetOrder();
                         GUI.DrawWaiterAtTable(table, this);
                         GUI.PartyPrintTableCleaner(table);

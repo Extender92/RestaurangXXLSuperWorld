@@ -61,5 +61,9 @@ namespace RestaurangXXLSuperWorld.Food
         public virtual object Clone() {
             return new FoodItem();
         }
+
+        public override string ToString() {
+            return Name + " " + Price.ToString() + " kr";
+        }
     }
 }
