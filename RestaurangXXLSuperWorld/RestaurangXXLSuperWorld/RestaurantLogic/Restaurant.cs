@@ -143,7 +143,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic {
         {
             GUI.PrintRestuarantInfo();
             GUI.PrintWaitresNews(waiters.ToArray());
-            GUI.PrintKitchenNews(kitchen.chefs.ToArray());
+            GUI.PrintKitchenNews(kitchen.chefs.ToArray(), kitchen);
         }
     }
 }

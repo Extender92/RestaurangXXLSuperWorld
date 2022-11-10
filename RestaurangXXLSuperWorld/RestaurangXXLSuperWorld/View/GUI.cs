@@ -195,14 +195,23 @@ namespace RestaurangXXLSuperWorld.View
                 }
             }
         }
-        internal static void PrintKitchenNews(Chef[] chefs)
+        internal static void PrintKitchenNews(Chef[] chefs, Kitchen kitchen)
         {
             string[] currentlyDoing = new string[chefs.Length];
             for (int i = 0; i < chefs.Length; i++)
             {
                 currentlyDoing[i] = chefs[i].doing;
             }
-            DrawNews("Kitchen News", 85, 13, currentlyDoing);
+
+            //DrawNews("Kitchen News", 85, 13, currentlyDoing);
+
+            Console.SetCursorPosition(kitchen.positionX + 1, kitchen.positionY + 1);
+            Console.Write("Köket:");
+            for (int i = 0; i < currentlyDoing.Length; i++)
+            {
+                Console.SetCursorPosition(kitchen.positionX + 1, kitchen.positionY + i + 2);
+                Console.Write(currentlyDoing[i]);
+            }
         }
         internal static void PrintWaitresNews(Waiter[] waiters)
         {
