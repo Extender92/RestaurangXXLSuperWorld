@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace RestaurangXXLSuperWorld.Persons {
     internal class Waiter : Person {
-        private bool anyTableForSmallParties;
+        private bool isOutOfSmallTables;
         // Reference to Kitchen the Waiter is Delivering to
         private Kitchen? kitchen;
         // Turns cleaning table
@@ -94,7 +94,7 @@ namespace RestaurangXXLSuperWorld.Persons {
             }
             return true;
         }
-        internal bool CanFindTableForFirstParty(bool largeTablesForSmallParties = false) {
+        internal bool CanFindTableForFirstParty(bool largeTablesForSmallParties) {
             var firstParty = queue.Peek(1);
             if (firstParty is not null && firstParty.First() is not null) {
                 var freeTables = from table in tables where table.IsFree()
@@ -109,7 +109,7 @@ namespace RestaurangXXLSuperWorld.Persons {
             }
             return false;
         }
-        private bool GetFirstPartyInQueue(bool largeTablesForSmallParties = false) {
+        private bool GetFirstPartyInQueue(bool isOutOfSmallTables) {
             Party<Customer>? firstParty;
             firstParty = queue.GetFirstInQueue();
             if (firstParty is not null) {
@@ -117,7 +117,7 @@ namespace RestaurangXXLSuperWorld.Persons {
                 var freeTables = from table in tables where table.IsFree()
                                  select table;
                 foreach (Table table in freeTables) {
-                    if (_toEntable.Size() <= table.GetNumberOfChairs() && (largeTablesForSmallParties ? true : table.GetNumberOfChairs() - _toEntable.Size() <= 1)) {
+                    if (_toEntable.Size() <= table.GetNumberOfChairs() && (isOutOfSmallTables ? true : table.GetNumberOfChairs() - _toEntable.Size() <= 1)) {
                         table.SeatGuests(_toEntable);
                         return true;
                     }
@@ -252,23 +252,17 @@ namespace RestaurangXXLSuperWorld.Persons {
 
             if (isBusy()) {
                 PerformDuties();
-            }
-            else if (CollectPayment()) {
+            } else if (CollectPayment()) {
                 doing = "Inkasserar pengar";
             } else if (DeliverOrderToTable()) {
                 doing = "Levererar mat";
             } else if (TakeOrderFromTable()) {
                 doing = "Tar kundens Order";
-            } else if (CanFindTableForFirstParty()) {
+            } else if (CanFindTableForFirstParty(isOutOfSmallTables)) {
                 doing = "Letar upp kunder vid entre";
-                GetFirstPartyInQueue();
+                GetFirstPartyInQueue(isOutOfSmallTables);
                 GUI.DrawWaiterAtQueue(door, this);
-            } else if (anyTableForSmallParties == true && CanFindTableForFirstParty(true)) {
-                doing = "Letar upp kunder vid entre";
-                GetFirstPartyInQueue();
-                GUI.DrawWaiterAtQueue(door, this);
-            } 
-            else {
+            } else {
                 GUI.DrawWaiterAtKitchen(kitchen, this);
                 doing = "Röker under köksfläkten";
             }
@@ -280,9 +274,9 @@ namespace RestaurangXXLSuperWorld.Persons {
                               select table;
 
             if (smallTables.Any()) {
-                anyTableForSmallParties = true;
+                isOutOfSmallTables = false;
             } else {
-                anyTableForSmallParties = false;
+                isOutOfSmallTables = true;
             }
         }
     }
