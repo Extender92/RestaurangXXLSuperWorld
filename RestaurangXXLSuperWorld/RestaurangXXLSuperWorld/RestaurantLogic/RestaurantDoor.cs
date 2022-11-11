@@ -9,7 +9,7 @@ namespace RestaurangXXLSuperWorld.RestaurantLogic
 {
     internal class RestaurantDoor
     {
-        internal static char[] charSet = { '┌', '─', '┤', '│', '└', '┤' };
+        private static char[] charSet = { '┌', '─', '┤', '│', '└', '┤' };
         private ConsoleColor Color = ConsoleColor.Magenta;
 
         internal int positionX;
